@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38a7ea7737fd478e9ee52625beaad923, type: 3}
+  m_Name: FirebaseScriptable
+  m_EditorClassIdentifier: 
+  cloudMessagingData:
+    urlBase: https://fcm.googleapis.com
+    requestUrlBase: /v1/projects/{0}/messages:send
+    batchUrlBase: /batch
+    scope:
+    - https://www.googleapis.com/auth/firebase.messaging
+    storedRequestUrl: 
+    token: 
+    receiver: []
+  realtimeDatabaseData:
+    urlBase: https://{0}-default-rtdb.firebaseio.com/
+    scope:
+    - https://www.googleapis.com/auth/firebase.database
+    - https://www.googleapis.com/auth/userinfo.email
+    storedBaseUrl: 
+    token: 
+  serviceAccountData:
+    type: 
+    projectID: 
+    privateKeyID: 
+    privateKey: 
+    clientEmail: 
+    clientID: 
+    authUri: 
+    tokenUri: 
+    authProviderX509CertURL: 
+    clientX509CertURL: 
+  expirationTime: 0
+  lastRequestSuccessful: 0

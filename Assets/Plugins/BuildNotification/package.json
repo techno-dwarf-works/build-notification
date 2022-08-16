@@ -1,0 +1,15 @@
+{
+  "name": "com.uurha.buildnotification",
+  "displayName": "Unity Build Notification",
+  "version": "0.0.1",
+  "unity": "2018.3",
+  "description": "Unity Build Notification",
+  "author": {
+    "name": "Arcueid D'athemon",
+    "url": "https://github.com/uurha"
+  },
+  "changelogUrl": "https://github.com/uurha/BuildNotification",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json":"3.0.2"
+  }
+}
