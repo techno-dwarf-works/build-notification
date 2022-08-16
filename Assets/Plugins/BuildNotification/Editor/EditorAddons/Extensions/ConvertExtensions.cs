@@ -91,8 +91,10 @@ namespace BuildNotification.EditorAddons.Extensions
                     return BuildPlatform.GameCoreXboxOne;
                 case BuildTarget.PS5:
                     return BuildPlatform.PS5;
+#if UNITY_2021_3_OR_NEWER
                 case BuildTarget.EmbeddedLinux:
                     return BuildPlatform.EmbeddedLinux;
+#endif
                 case BuildTarget.NoTarget:
                     return BuildPlatform.NoTarget;
                 default:

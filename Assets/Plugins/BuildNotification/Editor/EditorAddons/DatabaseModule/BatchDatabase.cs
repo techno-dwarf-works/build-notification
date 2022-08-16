@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -25,8 +26,14 @@ namespace BuildNotification.EditorAddons.DatabaseModule
             HttpResponseMessage responseMessage)
         {
             var parsed = await responseMessage.Content.ReadAsStringAsync();
-            var matches = Regex.Matches(parsed, @"{({*[^{}]*}*)}").ToList();
-            var respondList = matches.Select(match => JsonConvert.DeserializeObject<TResponse>(match.ToString())).ToList();
+#if UNITY_2021_3_OR_NEWER
+                var matches = Regex.Matches(parsed, @"{({*[^{}]*}*)}").ToList();
+#else
+            var matches = Regex.Matches(parsed, @"{({*[^{}]*}*)}").Cast<object>().ToList();
+#endif
+
+            var respondList = matches.Select(match => JsonConvert.DeserializeObject<TResponse>(match.ToString()))
+                .ToList();
 
             return new ListWrapper<TResponse>(respondList);
         }
@@ -38,7 +45,7 @@ namespace BuildNotification.EditorAddons.DatabaseModule
 
         private protected override HttpContent GenerateContent<TRequest>(Wrapper requestWrapper)
         {
-            if (requestWrapper is not ListWrapper<TRequest> list) throw new InvalidDataException();
+            if (!(requestWrapper is ListWrapper<TRequest> list)) throw new InvalidDataException();
             var content = new MultipartContent("mixed", Boundary);
             foreach (var request in list.Data)
             {

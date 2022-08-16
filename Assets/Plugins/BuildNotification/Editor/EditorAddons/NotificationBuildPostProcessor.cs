@@ -60,12 +60,12 @@ namespace BuildNotification.EditorAddons
             switch (bufferSummary.Result)
             {
                 case BuildStatus.Unknown:
-                    reportLog.AppendJoin(' ', NotSendingCloudNotification);
+                    reportLog.AppendLine(NotSendingCloudNotification);
                     break;
                 case BuildStatus.Succeeded:
                 case BuildStatus.Failed:
                 case BuildStatus.Cancelled:
-                    reportLog.AppendJoin(' ', SendingCloudNotification);
+                    reportLog.AppendLine(SendingCloudNotification);
                     SendCloudMessage(bufferSummary);
                     break;
                 default:
