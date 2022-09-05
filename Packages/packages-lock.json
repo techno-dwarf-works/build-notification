@@ -165,7 +165,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "ae674c10c91050905fe6eac906458408cb786a11"
+      "hash": "ca579f7f8729397107e39a06c3fdcd0b50904aec"
     },
     "com.uurha.betterextensions": {
       "version": "https://github.com/uurha/BetterExtensions.git#upm",

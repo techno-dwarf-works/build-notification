@@ -17,9 +17,12 @@ namespace BuildNotification.EditorAddons.DatabaseModule
     {
         private const string Boundary = "subrequestboundary";
 
-        public BatchDatabase(ISendData cmData)
+        public BatchDatabase(ISendData cmData) : base(cmData)
         {
-            sendData = cmData;
+        }
+
+        public BatchDatabase(ISendData cmData, HttpMethod method) : base(cmData, method)
+        {
         }
 
         private protected override async Task<Wrapper> ParseResponseMessage<TResponse>(
@@ -38,9 +41,10 @@ namespace BuildNotification.EditorAddons.DatabaseModule
             return new ListWrapper<TResponse>(respondList);
         }
 
-        private protected override async Task<HttpResponseMessage> SendRequest(HttpClient client, HttpContent content)
+        private protected override async Task<HttpResponseMessage> SendRequest(HttpClient client, HttpContent content, string query = null)
         {
-            return await client.PostAsync(sendData.RequestBatchUrl, content);
+            var uri = GenerateUri(_sendData.RequestBatchUrl, query);
+            return await client.PostAsync(uri, content);
         }
 
         private protected override HttpContent GenerateContent<TRequest>(Wrapper requestWrapper)
@@ -56,7 +60,7 @@ namespace BuildNotification.EditorAddons.DatabaseModule
                     });
 
                 var requestMessage = new HttpRequestMessage(HttpMethod.Post,
-                    new Uri(new Uri(sendData.BaseUrl), sendData.RequestUrl))
+                    new Uri(new Uri(_sendData.BaseUrl), _sendData.RequestUrl))
                 {
                     Content = new StringContent(serializeObject)
                 };
@@ -66,10 +70,10 @@ namespace BuildNotification.EditorAddons.DatabaseModule
                 );
 
 
-                messageContent.Headers.ContentType = new MediaTypeHeaderValue(sendData.GetContentType());
+                messageContent.Headers.ContentType = new MediaTypeHeaderValue(_sendData.GetContentType());
                 messageContent.Headers.TryAddWithoutValidation("Content-Transfer-Encoding", "binary");
-                messageContent.Headers.TryAddWithoutValidation("Authorization", $"Bearer {sendData.GenerateToken()}");
-                messageContent.Headers.TryAddWithoutValidation("Accept", sendData.GetContentType());
+                messageContent.Headers.TryAddWithoutValidation("Authorization", $"Bearer {_sendData.GenerateToken()}");
+                messageContent.Headers.TryAddWithoutValidation("Accept", _sendData.GetContentType());
 
                 content.Add(messageContent);
             }

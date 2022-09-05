@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace BuildNotification.Runtime.MessageDataModes.Models
 {
@@ -9,32 +10,31 @@ namespace BuildNotification.Runtime.MessageDataModes.Models
     {
         [JsonConstructor]
         public BufferSummary(DateTime buildStartedAt, DateTime buildEndedAt, ulong totalSize, List<Error> buildErrors,
-            BuildStatus result, BuildPlatform platform, string outputPath, string version, string productName)
+            BuildStatus buildStatus, BuildPlatform platform, string outputPath, string version, string productName)
         {
             BuildStartedAt = buildStartedAt;
             TotalSize = totalSize;
-            Result = result;
+            BuildStatus = buildStatus;
             Platform = platform;
             BuildEndedAt = buildEndedAt;
             BuildErrors = buildErrors;
             OutputPath = outputPath;
             Version = version;
-            ProductName = productName;
+            ProjectName = productName;
         }
 
         [JsonProperty("outputPath")] public string OutputPath { get; }
         [JsonProperty("buildStartedAt")] public DateTime BuildStartedAt { get; }
         [JsonIgnore] public int TotalErrors => BuildErrors?.Count ?? 0;
-        [JsonProperty("totalErrors")] public ulong TotalSize { get; private set; }
-        [JsonProperty("totalSize")] public BuildStatus Result { get; }
-        [JsonProperty("result")] public BuildPlatform Platform { get; }
-        [JsonProperty("platform")] public DateTime BuildEndedAt { get; private set; }
-        [JsonProperty("buildEndedAt")] public List<Error> BuildErrors { get; private set; }
+        [JsonProperty("totalSize")] public ulong TotalSize { get; private set; }
+        [JsonProperty("buildStatus")] public BuildStatus BuildStatus { get; }
+        [JsonProperty("platform")] public BuildPlatform Platform { get; }
+        [JsonProperty("buildEndedAt")] public DateTime BuildEndedAt { get; private set; }
+        [JsonProperty("buildErrors")] public List<Error> BuildErrors { get; private set; }
         [JsonProperty("version")] public string Version { get; }
-        [JsonProperty("productName")] public string ProductName { get; }
-        
-        
-        
+        [JsonProperty("productName")] public string ProjectName { get; }
+
+
         public static BufferSummary CreateBufferSummary(BuildStatus buildStatus)
         {
             return new BufferSummary(
@@ -45,8 +45,8 @@ namespace BuildNotification.Runtime.MessageDataModes.Models
                 buildStatus,
                 BuildPlatform.Android,
                 "buildSummary.outputPath",
-                "Application.productName",
-                "Application.version"
+                Application.version,
+                Application.productName
             );
         }
 

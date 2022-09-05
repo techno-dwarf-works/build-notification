@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using BetterAttributes.Runtime.EditorAddons.ReadOnlyAttributes;
+using BetterAttributes.Runtime.ReadOnlyAttributes;
 using BuildNotification.EditorAddons.Interfaces;
 using BuildNotification.Runtime;
 using UnityEngine;
@@ -25,13 +25,13 @@ namespace BuildNotification.EditorAddons.FirebaseImplementation
 
         public string[] Scopes => scope;
         public string BaseUrl => storedBaseUrl;
-        public string RequestUrl { get; }
+        
+        public string RequestUrl => $"/{FirebaseDefinition.MessagesRoot}";
         public string RequestBatchUrl { get; }
 
         public void SetProject(string project)
         {
-            storedBaseUrl = new Uri(new Uri(string.Format(urlBase, project)),
-                $"{FirebaseDefinition.MessagesRoot}.{PathService.DefaultExtension}").ToString();
+            storedBaseUrl = new Uri(string.Format(urlBase, project)).ToString();
         }
 
         public string GetContentType()

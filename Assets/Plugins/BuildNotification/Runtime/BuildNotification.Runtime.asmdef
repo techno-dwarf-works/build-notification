@@ -1,6 +1,6 @@
 {
-    "name": "BuildNotification",
-    "rootNamespace": "BuildNotification",
+    "name": "BuildNotification.Runtime",
+    "rootNamespace": "",
     "references": [
         "GUID:618e123b521db74429ef44b837b020b0",
         "GUID:28da8d3b12e3efa47928e0c9070f853d"
@@ -10,9 +10,7 @@
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "Newtonsoft.Json.dll",
-        "BouncyCastle.Crypto.dll",
-        "jose-jwt.net40.dll"
+        "Newtonsoft.Json.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

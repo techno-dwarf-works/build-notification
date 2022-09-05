@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BetterAttributes.Runtime.EditorAddons.ReadOnlyAttributes;
+using BetterAttributes.Runtime.ReadOnlyAttributes;
 using BuildNotification.EditorAddons.Authorization;
 using BuildNotification.EditorAddons.Models;
 using BuildNotification.Runtime;
@@ -27,23 +27,35 @@ namespace BuildNotification.EditorAddons.FirebaseImplementation
             realtimeDatabaseData.SetProject(adminSDKData.ProjectID);
         }
 
-        public static async Task<RealtimeDatabaseData> GetRealtimeDatabaseData()
+        public static async Task<bool> ValidateToken()
+        {
+            var fcmScriptable = Resources.Load<FirebaseScriptable>(nameof(FirebaseScriptable));
+            
+            if(fcmScriptable == null)
+            {
+                Debug.LogError($"{nameof(FirebaseScriptable)}.asset missing in Editor/Resources");
+                return false;
+            }
+            var now = DateTimeOffset.Now;
+            if (!FirebaseScriptableUpdater.ValidateLastRequest(fcmScriptable, now))
+            {
+                Debug.Log("Token not valid any more, or last request not successful. Refreshing...");
+                return await FirebaseScriptableUpdater.RefreshToken(fcmScriptable, now);
+            }
+
+            return true;
+        }
+
+        public static RealtimeDatabaseData GetRealtimeDatabaseData()
         {
             var fcmScriptable = Resources.Load<FirebaseScriptable>(nameof(FirebaseScriptable));
             if (fcmScriptable != null)
             {
                 if (fcmScriptable.serviceAccountData == null || !fcmScriptable.serviceAccountData.IsValid)
                 {
-                    Debug.LogError($"Try import service_account_data.{PathService.DefaultExtension} again");
+                    Debug.LogError($"Try import service_account_data{PathService.DefaultExtensionWithDot} again");
                     return null;
                 }
-
-                var now = DateTimeOffset.Now;
-                if (FirebaseScriptableUpdater.ValidateLastRequest(fcmScriptable, now))
-                    return fcmScriptable.realtimeDatabaseData;
-
-                Debug.Log("Token not valid any more, or last request not successful. Refreshing...");
-                if (!await FirebaseScriptableUpdater.RefreshToken(fcmScriptable, now)) return null;
 
                 return fcmScriptable.realtimeDatabaseData;
             }
@@ -51,24 +63,17 @@ namespace BuildNotification.EditorAddons.FirebaseImplementation
             Debug.LogError($"{nameof(FirebaseScriptable)}.asset missing in Editor/Resources");
             return null;
         }
-        
-        public static async Task<CloudMessagingData> GetCloudMessagingData()
+
+        public static CloudMessagingData GetCloudMessagingData()
         {
             var fcmScriptable = Resources.Load<FirebaseScriptable>(nameof(FirebaseScriptable));
             if (fcmScriptable != null)
             {
                 if (fcmScriptable.serviceAccountData == null || !fcmScriptable.serviceAccountData.IsValid)
                 {
-                    Debug.LogError($"Try import service_account_data.{PathService.DefaultExtension} again");
+                    Debug.LogError($"Try import service_account_data{PathService.DefaultExtensionWithDot} again");
                     return null;
                 }
-
-                var now = DateTimeOffset.Now;
-                if (FirebaseScriptableUpdater.ValidateLastRequest(fcmScriptable, now))
-                    return fcmScriptable.cloudMessagingData;
-
-                Debug.Log("Token not valid any more, or last request not successful. Refreshing...");
-                if (!await FirebaseScriptableUpdater.RefreshToken(fcmScriptable, now)) return null;
 
                 return fcmScriptable.cloudMessagingData;
             }

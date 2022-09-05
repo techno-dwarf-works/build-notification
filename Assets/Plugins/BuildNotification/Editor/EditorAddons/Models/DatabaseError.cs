@@ -4,10 +4,10 @@ using Newtonsoft.Json;
 namespace BuildNotification.EditorAddons.Models
 {
     [Serializable]
-    public class DatabaseError
+    public class ResponseError
     {
         [JsonConstructor]
-        public DatabaseError(string error)
+        public ResponseError(string error)
         {
             Error = error;
         }

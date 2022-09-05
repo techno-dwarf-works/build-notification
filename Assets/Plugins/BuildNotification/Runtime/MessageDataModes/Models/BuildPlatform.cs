@@ -9,16 +9,10 @@ namespace BuildNotification.Runtime.MessageDataModes.Models
     {
         NoTarget = -2, // 0xFFFFFFFE
         [Obsolete("BlackBerry has been removed in 5.4")] BB10 = -1, // 0xFFFFFFFF
-        [Obsolete("Use WSAPlayer instead (UnityUpgradable) -> WSAPlayer", true)] MetroPlayer = -1, // 0xFFFFFFFF
-        /// <summary>
-        ///   <para>OBSOLETE: Use iOS. Build an iOS player.</para>
-        /// </summary>
-        [Obsolete("Use iOS instead (UnityUpgradable) -> iOS", true)] iPhone = -1, // 0xFFFFFFFF
         /// <summary>
         ///   <para>Build a macOS standalone (Intel 64-bit).</para>
         /// </summary>
         StandaloneOSX = 2,
-        [Obsolete("Use StandaloneOSX instead (UnityUpgradable) -> StandaloneOSX", true)] StandaloneOSXUniversal = 3,
         /// <summary>
         ///   <para>Build a macOS Intel 32-bit standalone. (This build target is deprecated)</para>
         /// </summary>
@@ -27,14 +21,6 @@ namespace BuildNotification.Runtime.MessageDataModes.Models
         ///   <para>Build a Windows standalone.</para>
         /// </summary>
         StandaloneWindows = 5,
-        /// <summary>
-        ///   <para>Build a web player. (This build target is deprecated. Building for web player will no longer be supported in future versions of Unity.)</para>
-        /// </summary>
-        [Obsolete("WebPlayer has been removed in 5.4", true)] WebPlayer = 6,
-        /// <summary>
-        ///   <para>Build a streamed web player.</para>
-        /// </summary>
-        [Obsolete("WebPlayerStreamed has been removed in 5.4", true)] WebPlayerStreamed = 7,
         /// <summary>
         ///   <para>Build an iOS player.</para>
         /// </summary>

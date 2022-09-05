@@ -22,8 +22,8 @@ namespace BuildNotification.EditorAddons.Extensions
                 buildSummary.result.ToBuildStatus(),
                 buildSummary.platform.ToBuildPlatform(),
                 buildSummary.outputPath,
-                Application.productName,
-                Application.version
+                Application.version,
+                Application.productName
             );
         }
 

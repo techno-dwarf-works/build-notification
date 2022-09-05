@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using BuildNotification.EditorAddons.Extensions;
 using BuildNotification.EditorAddons.FirebaseImplementation;
 using BuildNotification.EditorAddons.Models;
+using BuildNotification.Runtime;
 using BuildNotification.Runtime.MessageDataModes.Models;
 using UnityEditor;
 using UnityEditor.Build;
@@ -56,8 +58,8 @@ namespace BuildNotification.EditorAddons
         private void AnalyzeSummary(BufferSummary bufferSummary)
         {
             var reportLog = new StringBuilder();
-            reportLog.AppendLine($"Build status {bufferSummary.Result}.");
-            switch (bufferSummary.Result)
+            reportLog.AppendLine($"Build status {bufferSummary.BuildStatus}.");
+            switch (bufferSummary.BuildStatus)
             {
                 case BuildStatus.Unknown:
                     reportLog.AppendLine(NotSendingCloudNotification);
@@ -77,8 +79,13 @@ namespace BuildNotification.EditorAddons
 
         private async void SendCloudMessage(BufferSummary summary)
         {
-            var cloudMessagingData = await FirebaseScriptable.GetCloudMessagingData();
-            var realtimeDatabaseData = await FirebaseScriptable.GetRealtimeDatabaseData();
+            if (!await FirebaseScriptable.ValidateToken())
+            {
+                return;
+            }
+            
+            var cloudMessagingData = FirebaseScriptable.GetCloudMessagingData();
+            var realtimeDatabaseData = FirebaseScriptable.GetRealtimeDatabaseData();
             if (cloudMessagingData == null || realtimeDatabaseData == null)
             {
                 return;
@@ -95,10 +102,10 @@ namespace BuildNotification.EditorAddons
             }
 
             await DatabaseFactory
-                .SendToDatabase<MessagingRequest, MessagingRespondBody, Exception>(cloudMessagingData, list);
-            
-            await DatabaseFactory.SendToDatabase<FirebaseMessageData, DatabaseRespondBody, DatabaseError>(
-                realtimeDatabaseData, new List<FirebaseMessageData>() { data });
+                .Send<MessagingRequest, MessagingRespondBody, ResponseError>(cloudMessagingData, list);
+
+            await DatabaseFactory.Send<FirebaseMessageData, DatabaseRespondBody, ResponseError>(
+                realtimeDatabaseData, data, HttpMethod.Put, $"{data.Guid}{PathService.DefaultExtensionWithDot}");
         }
     }
 }

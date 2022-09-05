@@ -10,8 +10,8 @@ namespace BuildNotification.EditorAddons.Models
     {
         public MessagingRequestBody(FirebaseMessageData data, Receiver receiver)
         {
-            //TODO: Find better way to create title without formatting
-            var generator = new DescriptionGenerator(data.Body);
+            var generator = new DescriptionGenerator();
+            generator.Set(data.Body);
             Notification = new Notification(generator.GenerateClearTitle(), generator.GenerateMessage());
             Data = data;
             Receiver = receiver.Token;
@@ -21,7 +21,8 @@ namespace BuildNotification.EditorAddons.Models
 
         public MessagingRequestBody(FirebaseMessageData data, Condition condition)
         {
-            var generator = new DescriptionGenerator(data.Body);
+            var generator = new DescriptionGenerator();
+            generator.Set(data.Body);
             Notification = new Notification(generator.GenerateClearTitle(), generator.GenerateMessage());
             Data = data;
             Condition = condition.Value;
@@ -31,7 +32,8 @@ namespace BuildNotification.EditorAddons.Models
 
         public MessagingRequestBody(FirebaseMessageData data, Topic topic)
         {
-            var generator = new DescriptionGenerator(data.Body);
+            var generator = new DescriptionGenerator();
+            generator.Set(data.Body);
             Notification = new Notification(generator.GenerateClearTitle(), generator.GenerateMessage());
             Data = data;
             Topic = topic.Value;

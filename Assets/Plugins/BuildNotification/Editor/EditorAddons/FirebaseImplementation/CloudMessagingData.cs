@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using BetterAttributes.Runtime.EditorAddons.ReadOnlyAttributes;
+using BetterAttributes.Runtime.ReadOnlyAttributes;
 using BuildNotification.EditorAddons.Interfaces;
 using BuildNotification.EditorAddons.Models;
 using UnityEngine;

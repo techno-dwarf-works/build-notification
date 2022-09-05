@@ -67,6 +67,13 @@ namespace BuildNotification.Runtime
             return default;
         }
 
+        public static void DeleteFile(string path)
+        {
+            if (FileExists(path))
+            {
+                File.Delete(path);
+            }
+        }
 
         public static async Task SaveFile<T>(string path, T data) where T : class
         {

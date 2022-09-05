@@ -30,7 +30,7 @@ namespace BuildNotification.EditorAddons.Window
                 if (!await FirebaseScriptableUpdater.RefreshToken(fcmScriptable, now)) return;
             }
 
-            await DatabaseFactory.SendToDatabase<MessagingRequest, MessagingRespondBody, Exception>(
+            await DatabaseFactory.Send<MessagingRequest, MessagingRespondBody, ResponseError>(
                 fcmScriptable.cloudMessagingData, list);
             onComplete?.Invoke();
         }
@@ -56,7 +56,7 @@ namespace BuildNotification.EditorAddons.Window
                 if (!await FirebaseScriptableUpdater.RefreshToken(fcmScriptable, now)) return;
             }
 
-            await DatabaseFactory.SendToDatabase<MessagingRequest, MessagingRespondBody, Exception>(
+            await DatabaseFactory.Send<MessagingRequest, MessagingRespondBody, ResponseError>(
                 fcmScriptable.cloudMessagingData, list);
             onComplete?.Invoke();
         }

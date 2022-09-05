@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using BuildNotification.EditorAddons.FirebaseImplementation;
 using BuildNotification.EditorAddons.Models;
+using BuildNotification.Runtime;
 using BuildNotification.Runtime.MessageDataModes.Models;
 using UnityEngine;
 
@@ -11,15 +13,17 @@ namespace BuildNotification.EditorAddons.Window
     {
         public static async void SendData(FirebaseScriptable fcmScriptable, Action onComplete)
         {
-            var data = new FirebaseMessageData(BufferSummary.CreateBufferSummary(BuildStatus.Succeeded));
+            var bufferSummary = BufferSummary.CreateBufferSummary(BuildStatus.Failed);
+            bufferSummary.BuildErrors.Add(new Error("Some error",""));
+            var data = new FirebaseMessageData(bufferSummary);
 
-            var now = DateTimeOffset.Now;
-            if (!FirebaseScriptableUpdater.ValidateLastRequest(fcmScriptable, now))
+            if (!await FirebaseScriptable.ValidateToken())
             {
-                Debug.Log("Token not valid any more, or last request not successful. Refreshing...");
-                if (!await FirebaseScriptableUpdater.RefreshToken(fcmScriptable, now)) return;
+                return;
             }
-            await DatabaseFactory.SendToDatabase<FirebaseMessageData, DatabaseRespondBody, DatabaseError>(fcmScriptable.realtimeDatabaseData, new List<FirebaseMessageData>(){data});
+
+            await DatabaseFactory.Send<FirebaseMessageData, DatabaseRespondBody, ResponseError>(
+                fcmScriptable.realtimeDatabaseData, data, HttpMethod.Put, $"{data.Guid}{PathService.DefaultExtensionWithDot}");
             onComplete?.Invoke();
         }
     }
