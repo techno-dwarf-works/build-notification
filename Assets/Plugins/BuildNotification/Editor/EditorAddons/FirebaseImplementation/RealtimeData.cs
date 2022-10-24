@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using BetterAttributes.Runtime.ReadOnlyAttributes;
+using BetterAttributes.Runtime.Attributes.ReadOnly;
 using BuildNotification.EditorAddons.Interfaces;
 using BuildNotification.Runtime;
 using UnityEngine;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BetterAttributes.Runtime.ReadOnlyAttributes;
+using BetterAttributes.Runtime.Attributes.ReadOnly;
 using BuildNotification.EditorAddons.Authorization;
 using BuildNotification.EditorAddons.Models;
 using BuildNotification.Runtime;
