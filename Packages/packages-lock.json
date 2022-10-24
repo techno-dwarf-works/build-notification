@@ -161,18 +161,18 @@
       "url": "https://packages.unity.com"
     },
     "com.uurha.betterattributes": {
-      "version": "https://github.com/uurha/BetterAttributes.git#upm",
+      "version": "0.1.0",
       "depth": 0,
-      "source": "git",
+      "source": "registry",
       "dependencies": {},
-      "hash": "e11325963972e289b5e928602625648a96d94b55"
+      "url": "https://package.openupm.com"
     },
     "com.uurha.betterextensions": {
-      "version": "https://github.com/uurha/BetterExtensions.git#upm",
+      "version": "0.0.5",
       "depth": 0,
-      "source": "git",
+      "source": "registry",
       "dependencies": {},
-      "hash": "45576392c4fcb6acedfd2341e7422c4387531f5c"
+      "url": "https://package.openupm.com"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

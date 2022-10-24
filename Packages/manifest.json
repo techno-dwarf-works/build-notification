@@ -12,8 +12,8 @@
     "com.unity.timeline": "1.6.4",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.7.6",
-    "com.uurha.betterattributes": "https://github.com/uurha/BetterAttributes.git#upm",
-    "com.uurha.betterextensions": "https://github.com/uurha/BetterExtensions.git#upm",
+    "com.uurha.betterattributes": "0.1.0",
+    "com.uurha.betterextensions": "0.0.5",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
@@ -45,5 +45,14 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  }
+  },
+  "scopedRegistries": [
+    {
+      "name": "Arcuied Plugins",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.uurha"
+      ]
+    }
+  ]
 }
