@@ -105,7 +105,7 @@ namespace BuildNotification.EditorAddons
                 .Send<MessagingRequest, MessagingRespondBody, ResponseError>(cloudMessagingData, list);
 
             await DatabaseFactory.Send<FirebaseMessageData, DatabaseRespondBody, ResponseError>(
-                realtimeDatabaseData, data, HttpMethod.Put, $"{data.Guid}{PathService.DefaultExtensionWithDot}");
+                realtimeDatabaseData, data, HttpMethod.Put, $"{data.Guid}{PathService.JsonExtensionWithDot}");
         }
     }
 }

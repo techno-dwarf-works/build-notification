@@ -7,14 +7,14 @@ namespace BuildNotification.Runtime
     public static class PathService
     {
         public static string ServiceInfoDataPath { get; }
-        public const string DefaultExtension = "json";
-        public const string DefaultExtensionWithDot = ".json";
+        public const string JsonExtension = "json";
+        public const string JsonExtensionWithDot = ".json";
         public const string JsonFileType = "application/json";
 
         static PathService()
         {
             ServiceInfoDataPath = Path.Combine(Application.persistentDataPath,
-                $"{nameof(ServiceInfoData)}{DefaultExtensionWithDot}");
+                $"{nameof(ServiceInfoData)}{JsonExtensionWithDot}");
         }
     }
 }

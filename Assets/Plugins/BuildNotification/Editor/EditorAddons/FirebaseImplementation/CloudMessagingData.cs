@@ -19,7 +19,7 @@ namespace BuildNotification.EditorAddons.FirebaseImplementation
         [TextArea(2, 5)] [SerializeField] private string batchUrlBase = "/batch";
 
         [ReadOnlyField] [TextArea(2, 5)] [SerializeField]
-        private string[] scope = new string[]{"https://www.googleapis.com/auth/firebase.messaging"};
+        private string[] scope = new string[] { "https://www.googleapis.com/auth/firebase.messaging" };
 
         [ReadOnlyField] [TextArea(2, 5)] [SerializeField]
         private string storedRequestUrl;

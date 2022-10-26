@@ -23,7 +23,7 @@ namespace BuildNotification.EditorAddons.Window
             }
 
             await DatabaseFactory.Send<FirebaseMessageData, DatabaseRespondBody, ResponseError>(
-                fcmScriptable.realtimeDatabaseData, data, HttpMethod.Put, $"{data.Guid}{PathService.DefaultExtensionWithDot}");
+                fcmScriptable.realtimeDatabaseData, data, HttpMethod.Put, $"{data.Guid}{PathService.JsonExtensionWithDot}");
             onComplete?.Invoke();
         }
     }

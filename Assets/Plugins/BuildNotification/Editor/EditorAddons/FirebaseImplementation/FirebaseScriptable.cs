@@ -29,13 +29,14 @@ namespace BuildNotification.EditorAddons.FirebaseImplementation
 
         public static async Task<bool> ValidateToken()
         {
-            var fcmScriptable = Resources.Load<FirebaseScriptable>(nameof(FirebaseScriptable));
-            
-            if(fcmScriptable == null)
+            var fcmScriptable = FirebaseScriptableLoader.GetScriptable();
+
+            if (fcmScriptable == null)
             {
                 Debug.LogError($"{nameof(FirebaseScriptable)}.asset missing in Editor/Resources");
                 return false;
             }
+
             var now = DateTimeOffset.Now;
             if (!FirebaseScriptableUpdater.ValidateLastRequest(fcmScriptable, now))
             {
@@ -48,37 +49,37 @@ namespace BuildNotification.EditorAddons.FirebaseImplementation
 
         public static RealtimeDatabaseData GetRealtimeDatabaseData()
         {
-            var fcmScriptable = Resources.Load<FirebaseScriptable>(nameof(FirebaseScriptable));
+            var fcmScriptable = FirebaseScriptableLoader.GetScriptable();
             if (fcmScriptable != null)
             {
                 if (fcmScriptable.serviceAccountData == null || !fcmScriptable.serviceAccountData.IsValid)
                 {
-                    Debug.LogError($"Try import service_account_data{PathService.DefaultExtensionWithDot} again");
+                    Debug.LogError($"Try import service_account_data{PathService.JsonExtensionWithDot} again");
                     return null;
                 }
 
                 return fcmScriptable.realtimeDatabaseData;
             }
 
-            Debug.LogError($"{nameof(FirebaseScriptable)}.asset missing in Editor/Resources");
+            Debug.LogError($"{nameof(FirebaseScriptable)}.asset missing");
             return null;
         }
 
         public static CloudMessagingData GetCloudMessagingData()
         {
-            var fcmScriptable = Resources.Load<FirebaseScriptable>(nameof(FirebaseScriptable));
+            var fcmScriptable = FirebaseScriptableLoader.GetScriptable();
             if (fcmScriptable != null)
             {
                 if (fcmScriptable.serviceAccountData == null || !fcmScriptable.serviceAccountData.IsValid)
                 {
-                    Debug.LogError($"Try import service_account_data{PathService.DefaultExtensionWithDot} again");
+                    Debug.LogError($"Try import service_account_data{PathService.JsonExtensionWithDot} again");
                     return null;
                 }
 
                 return fcmScriptable.cloudMessagingData;
             }
 
-            Debug.LogError($"{nameof(FirebaseScriptable)}.asset missing in Editor/Resources");
+            Debug.LogError($"{nameof(FirebaseScriptable)}.asset missing");
             return null;
         }
 

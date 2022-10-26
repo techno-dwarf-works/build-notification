@@ -56,7 +56,7 @@ namespace BuildNotification.EditorAddons.Window
 
         private void TryLoadScriptable()
         {
-            _fcmScriptable = Resources.Load<FirebaseScriptable>(nameof(FirebaseScriptable));
+            _fcmScriptable = FirebaseScriptableLoader.GetScriptable();
             RecycleInspector(_fcmScriptable);
         }
 
@@ -111,7 +111,7 @@ namespace BuildNotification.EditorAddons.Window
 
             if (GUILayout.Button($"{LocalizationService.Import} {LocalizationService.FirebaseAccountService}"))
             {
-                var path = EditorUtility.OpenFilePanel(LocalizationService.FirebaseAccountService, "", PathService.DefaultExtension);
+                var path = EditorUtility.OpenFilePanel(LocalizationService.FirebaseAccountService, "", PathService.JsonExtension);
 
                 if (string.IsNullOrEmpty(path)) return;
                 var data = ReadPathAndInitializeData<FirebaseAdminSDKData>(path);
@@ -132,13 +132,13 @@ namespace BuildNotification.EditorAddons.Window
 
                 if (GUILayout.Button($"{LocalizationService.Prepare} {LocalizationService.GoogleService}"))
                 {
-                    var path = EditorUtility.OpenFilePanel(LocalizationService.GoogleService, "", PathService.DefaultExtension);
+                    var path = EditorUtility.OpenFilePanel(LocalizationService.GoogleService, "", PathService.JsonExtension);
 
                     if (string.IsNullOrEmpty(path)) return;
                     var data = ReadPathAndInitializeData<ServiceInfoData>(path);
 
                     var savePath = EditorUtility.SaveFilePanel(LocalizationService.GoogleService, "",
-                        $"{nameof(ServiceInfoData)}", PathService.DefaultExtension);
+                        $"{nameof(ServiceInfoData)}", PathService.JsonExtension);
                     WriteServiceAccountData(savePath, data);
 
                     Debug.Log($"{nameof(ServiceInfoData)} initialized", _fcmScriptable);
