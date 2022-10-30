@@ -1,17 +1,24 @@
 {
   "name": "com.uurha.buildnotification",
   "displayName": "Unity Build Notification",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "unity": "2018.3",
   "description": "Unity Build Notification",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.0.2",
+    "com.uurha.betterattributes": "0.1.1",
+    "com.uurha.betterextensions": "0.1.0"
+  },
   "author": {
     "name": "Arcueid D'athemon",
     "url": "https://github.com/uurha"
   },
   "changelogUrl": "https://github.com/uurha/BuildNotification",
-  "dependencies": {
-    "com.unity.nuget.newtonsoft-json": "3.0.2",
-    "com.uurha.betterattributes": "0.1.0",
-    "com.uurha.betterextensions": "0.0.5"
-  }
+  "documentationUrl": "https://github.com/uurha/BuildNotification/tree/main#readme",
+  "license": "MIT",
+  "keywords": [
+    "notifications",
+    "remote management",
+    "build pipeline"
+  ]
 }
