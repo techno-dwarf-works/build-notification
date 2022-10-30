@@ -16,6 +16,7 @@
   "changelogUrl": "https://github.com/uurha/BuildNotification",
   "documentationUrl": "https://github.com/uurha/BuildNotification/tree/main#readme",
   "license": "MIT",
+  "licensesUrl":"https://github.com/uurha/BuildNotification/blob/main/LICENSE",
   "keywords": [
     "notifications",
     "remote management",
