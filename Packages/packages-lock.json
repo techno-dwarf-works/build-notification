@@ -161,7 +161,7 @@
       "url": "https://packages.unity.com"
     },
     "com.uurha.betterattributes": {
-      "version": "0.1.1",
+      "version": "0.1.4",
       "depth": 0,
       "source": "registry",
       "dependencies": {
