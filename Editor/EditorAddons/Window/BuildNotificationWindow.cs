@@ -135,13 +135,13 @@ namespace BuildNotification.EditorAddons.Window
                     var path = EditorUtility.OpenFilePanel(LocalizationService.GoogleService, "", PathService.JsonExtension);
 
                     if (string.IsNullOrEmpty(path)) return;
-                    var data = ReadPathAndInitializeData<ServiceInfoData>(path);
+                    var data = ReadPathAndInitializeData<Runtime.Authorization.ServiceInfoData>(path);
 
                     var savePath = EditorUtility.SaveFilePanel(LocalizationService.GoogleService, "",
-                        $"{nameof(ServiceInfoData)}", PathService.JsonExtension);
+                        $"{nameof(Runtime.Authorization.ServiceInfoData)}", PathService.JsonExtension);
                     WriteServiceAccountData(savePath, data);
 
-                    Debug.Log($"{nameof(ServiceInfoData)} initialized", _fcmScriptable);
+                    Debug.Log($"{nameof(Runtime.Authorization.ServiceInfoData)} initialized", _fcmScriptable);
                 }
 
                 EditorGUILayout.EndHorizontal();
