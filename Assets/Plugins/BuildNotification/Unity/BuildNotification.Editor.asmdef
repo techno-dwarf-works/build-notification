@@ -1,18 +1,22 @@
 {
-    "name": "BuildNotification.Runtime",
+    "name": "BuildNotification.Editor",
     "rootNamespace": "",
     "references": [
         "GUID:28da8d3b12e3efa47928e0c9070f853d",
-        "GUID:35101f455c979e94c9a0a4793484b7fd"
+        "GUID:8d52322411e11ce479909d160e075f2b",
+        "GUID:35101f455c979e94c9a0a4793484b7fd",
+        "GUID:0c1c130fe4d07bb47a463e8f028a053a"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "Newtonsoft.Json.dll",
         "BouncyCastle.Crypto.dll",
-        "jose-jwt.net40.dll"
+        "jose-jwt.net40.dll",
+        "Newtonsoft.Json.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],
