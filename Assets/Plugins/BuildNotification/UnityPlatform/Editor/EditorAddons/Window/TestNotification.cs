@@ -6,7 +6,7 @@ using BuildNotification.Runtime.Tooling.FirebaseImplementation;
 using BuildNotification.Runtime.Tooling.Models;
 using UnityEngine;
 
-namespace BuildNotification.Unity.EditorAddons.Window
+namespace BuildNotification.UnityPlatform.EditorAddons.Window
 {
     public static class TestNotification
     {

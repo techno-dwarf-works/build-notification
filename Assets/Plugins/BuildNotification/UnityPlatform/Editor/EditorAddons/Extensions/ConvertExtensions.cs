@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
-namespace BuildNotification.Unity.EditorAddons.Extensions
+namespace BuildNotification.UnityPlatform.EditorAddons.Extensions
 {
     internal static class ConvertExtensions
     {

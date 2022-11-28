@@ -3,7 +3,7 @@ using BuildNotification.Runtime.Tooling.FirebaseImplementation;
 using UnityEditor;
 using UnityEngine;
 
-namespace BuildNotification.Unity.EditorAddons
+namespace BuildNotification.UnityPlatform.EditorAddons
 {
     [InitializeOnLoad]
     public class FirebaseScriptableLoader : FirebaseDataLoader

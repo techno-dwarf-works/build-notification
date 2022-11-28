@@ -2,7 +2,6 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using BetterExtensions.Runtime.Extension;
-using BuildNotification.Runtime;
 using BuildNotification.Runtime.Services;
 using BuildNotification.Runtime.Tooling.Authorization;
 using BuildNotification.Runtime.Tooling.FirebaseImplementation;
@@ -10,7 +9,7 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace BuildNotification.Unity.EditorAddons.Window
+namespace BuildNotification.UnityPlatform.EditorAddons.Window
 {
     public class BuildNotificationWindow : EditorWindow
     {
