@@ -62,6 +62,7 @@
 *.exr filter=lfs diff=lfs merge=lfs -text
 *.jar filter=lfs diff=lfs merge=lfs -text
 *.exe filter=lfs diff=lfs merge=lfs -text
+*.dll filter=lfs diff=lfs merge=lfs -text
 # Docs
 *.pdf filter=lfs diff=lfs merge=lfs -text
 # Collapse Unity-generated files on GitHub
