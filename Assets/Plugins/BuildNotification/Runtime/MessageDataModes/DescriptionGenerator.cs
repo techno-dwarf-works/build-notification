@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using BuildNotification.Runtime.MessageDataModes.Models;
+using BuildNotification.Runtime.Services;
 
 namespace BuildNotification.Runtime.MessageDataModes
 {
