@@ -4,7 +4,7 @@ using BuildNotification.Runtime.Tooling.FirebaseImplementation;
 using BuildNotification.Runtime.Tooling.Models;
 using UnityEngine;
 
-namespace BuildNotification.Unity.EditorAddons
+namespace BuildNotification.UnityPlatform.EditorAddons
 {
     public class FirebaseScriptable : ScriptableObject
     {
