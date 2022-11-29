@@ -24,7 +24,7 @@ Project Settings -> Package Manager -> Scoped registries
       "name": "Nuget",
       "url": "https://unitynuget-registry.azurewebsites.net",
       "scopes": [
-        "org.nuget"
+        "org.nuget.newtonsoft"
       ]
     }
   ]

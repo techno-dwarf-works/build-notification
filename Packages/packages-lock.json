@@ -154,16 +154,16 @@
       "url": "https://packages.unity.com"
     },
     "com.uurha.betterattributes": {
-      "version": "0.1.4",
+      "version": "0.2.2",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.uurha.betterextensions": "0.1.0"
+        "com.uurha.betterextensions": "0.1.2"
       },
       "url": "https://package.openupm.com"
     },
     "com.uurha.betterextensions": {
-      "version": "0.1.0",
+      "version": "0.1.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {},

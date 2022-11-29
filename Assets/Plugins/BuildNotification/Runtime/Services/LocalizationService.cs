@@ -1,4 +1,4 @@
-﻿using BetterExtensions.Runtime.Extension;
+﻿using Better.Extensions.Runtime;
 using BuildNotification.Runtime.Authorization;
 
 namespace BuildNotification.Runtime.Services

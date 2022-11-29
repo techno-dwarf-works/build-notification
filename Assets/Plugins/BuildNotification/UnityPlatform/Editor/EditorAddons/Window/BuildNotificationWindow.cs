@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using BetterExtensions.Runtime.Extension;
+using Better.Extensions.Runtime;
 using BuildNotification.Runtime.Services;
 using BuildNotification.Runtime.Tooling.Authorization;
 using BuildNotification.Runtime.Tooling.FirebaseImplementation;
