@@ -13,21 +13,14 @@ Project Settings -> Package Manager -> Scoped registries
 
 ```json
 "scopedRegistries": [
-    {
-      "name": "Arcueid Plugins",
-      "url": "https://package.openupm.com",
-      "scopes": [
-        "com.uurha"
-      ]
-    },
-    {
-      "name": "Nuget",
-      "url": "https://unitynuget-registry.azurewebsites.net",
-      "scopes": [
-        "org.nuget.newtonsoft"
-      ]
-    }
-  ]
+{
+"name": "Arcueid Plugins",
+"url": "https://package.openupm.com",
+"scopes": [
+"com.uurha"
+]
+}
+]
 ```
 
 Window -> PackageManager -> Packages: My Registries -> Arcueid Plugins -> BuildNotification

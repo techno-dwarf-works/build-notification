@@ -1,11 +1,11 @@
 {
   "name": "com.uurha.buildnotification",
   "displayName": "Unity Build Notification",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "unity": "2018.3",
   "description": "Unity Build Notification",
   "dependencies": {
-    "org.nuget.newtonsoft.json": "13.0.2",
+    "com.unity.nuget.newtonsoft-json": "3.0.2",
     "com.uurha.betterattributes": "0.1.4",
     "com.uurha.betterextensions": "0.1.0"
   },
