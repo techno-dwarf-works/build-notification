@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace BuildNotification.Runtime.Tooling.Models
+namespace Better.BuildNotification.Runtime.Tooling.Models
 {
     [Serializable]
     public class MessagingRespondBody

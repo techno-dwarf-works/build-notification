@@ -2,11 +2,11 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Better.Attributes.Runtime.ReadOnly;
-using BuildNotification.Runtime.Services;
-using BuildNotification.Runtime.Tooling.Interfaces;
+using Better.BuildNotification.Runtime.Services;
+using Better.BuildNotification.Runtime.Tooling.Interfaces;
 using UnityEngine;
 
-namespace BuildNotification.Runtime.Tooling.FirebaseImplementation
+namespace Better.BuildNotification.Runtime.Tooling.FirebaseImplementation
 {
     [Serializable]
     public class RealtimeDatabaseData : ISendData

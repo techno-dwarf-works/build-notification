@@ -1,4 +1,4 @@
-namespace BuildNotification.Runtime.Tooling.FirebaseImplementation
+namespace Better.BuildNotification.Runtime.Tooling.FirebaseImplementation
 {
     public abstract class FirebaseDataLoader
     {

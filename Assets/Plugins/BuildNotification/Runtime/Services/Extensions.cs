@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BuildNotification.Runtime.Services
+namespace Better.BuildNotification.Runtime.Services
 {
     public static class Extensions
     {

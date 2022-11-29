@@ -4,13 +4,12 @@ using System.IO;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using BuildNotification.Runtime.Tooling.DatabaseModule;
-using BuildNotification.Runtime.Tooling.DatabaseModule.RequestWrappers;
+using Better.BuildNotification.Runtime.Tooling.DatabaseModule;
 using Jose;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.OpenSsl;
 
-namespace BuildNotification.Runtime.Tooling.Authorization
+namespace Better.BuildNotification.Runtime.Tooling.Authorization
 {
     public class FirebaseCustomToken
     {

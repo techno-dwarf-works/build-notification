@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using BuildNotification.Runtime.Authorization.Models;
 using Newtonsoft.Json;
 
-namespace BuildNotification.Runtime.Authorization
+namespace Better.BuildNotification.Runtime.Authorization
 {
     public class ServiceInfoData
     {

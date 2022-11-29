@@ -1,21 +1,43 @@
 using System;
 using System.Threading.Tasks;
 using Better.Attributes.Runtime.ReadOnly;
-using BuildNotification.Runtime.Services;
-using BuildNotification.Runtime.Tooling.Authorization;
+using Better.BuildNotification.Runtime.Services;
+using Better.BuildNotification.Runtime.Tooling.Authorization;
 using UnityEngine;
 
-namespace BuildNotification.Runtime.Tooling.FirebaseImplementation
+namespace Better.BuildNotification.Runtime.Tooling.FirebaseImplementation
 {
     [Serializable]
     public class FirebaseData
     {
-        [SerializeField] public CloudMessagingData cloudMessagingData;
-        [SerializeField] public RealtimeDatabaseData realtimeDatabaseData;
-        [ReadOnlyField] [SerializeField] public FirebaseAdminSDKData serviceAccountData;
-        [ReadOnlyField] [SerializeField] public long expirationTime;
-        [ReadOnlyField] [SerializeField] public bool lastRequestSuccessful;
-        
+        [SerializeField] private CloudMessagingData cloudMessagingData;
+        [SerializeField] private RealtimeDatabaseData realtimeDatabaseData;
+        [ReadOnlyField] [SerializeField] private FirebaseAdminSDKData serviceAccountData;
+        [ReadOnlyField] [SerializeField] private long expirationTime;
+        [ReadOnlyField] [SerializeField] private bool lastRequestSuccessful;
+
+        public FirebaseAdminSDKData ServiceAccountData
+        {
+            get => serviceAccountData;
+            set => serviceAccountData = value;
+        }
+
+        public CloudMessagingData MessagingData => cloudMessagingData;
+
+        public RealtimeDatabaseData DatabaseData => realtimeDatabaseData;
+
+        public long ExpirationTime
+        {
+            get => expirationTime;
+            set => expirationTime = value;
+        }
+
+        public bool LastRequestSuccessful
+        {
+            get => lastRequestSuccessful;
+            set => lastRequestSuccessful = value;
+        }
+
         public static async Task<bool> ValidateToken()
         {
             var firebaseData = FirebaseDataLoader.Instance.GetData();

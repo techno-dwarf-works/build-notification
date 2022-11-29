@@ -1,4 +1,4 @@
-﻿namespace BuildNotification.Runtime.Tooling.DatabaseModule.Extensions
+﻿namespace Better.BuildNotification.Runtime.Tooling.DatabaseModule
 {
     internal static class Properties
     {
