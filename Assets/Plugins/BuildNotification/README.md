@@ -19,6 +19,13 @@ Project Settings -> Package Manager -> Scoped registries
       "scopes": [
         "com.uurha"
       ]
+    },
+    {
+      "name": "Nuget",
+      "url": "https://unitynuget-registry.azurewebsites.net",
+      "scopes": [
+        "org.nuget.newtonsoft"
+      ]
     }
   ]
 ```
