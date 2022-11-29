@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace BuildNotification.Runtime.Tooling.Authorization
+namespace Better.BuildNotification.Runtime.Tooling.Authorization
 {
     [Serializable]
     public class TokenResponseError

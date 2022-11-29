@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Net.Http;
-using BuildNotification.Runtime.MessageDataModes.Models;
-using BuildNotification.Runtime.Services;
-using BuildNotification.Runtime.Tooling;
-using BuildNotification.Runtime.Tooling.FirebaseImplementation;
-using BuildNotification.Runtime.Tooling.Models;
+using Better.BuildNotification.Runtime.MessageData;
+using Better.BuildNotification.Runtime.Services;
+using Better.BuildNotification.Runtime.Tooling;
+using Better.BuildNotification.Runtime.Tooling.FirebaseImplementation;
+using Better.BuildNotification.Runtime.Tooling.Models;
 
-namespace BuildNotification.UnityPlatform.EditorAddons.Window
+namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
 {
     public static class TestDatabase
     {
@@ -22,7 +22,7 @@ namespace BuildNotification.UnityPlatform.EditorAddons.Window
             }
 
             await DatabaseFactory.Send<FirebaseMessageData, DatabaseRespondBody, ResponseError>(
-                fcmScriptable.Data.realtimeDatabaseData, data, HttpMethod.Put, $"{data.Guid}{PathService.JsonExtensionWithDot}");
+                fcmScriptable.Data.DatabaseData, data, HttpMethod.Put, $"{data.Guid}{PathService.JsonExtensionWithDot}");
             onComplete?.Invoke();
         }
     }

@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using BuildNotification.Runtime.MessageDataModes.Models;
-using BuildNotification.Runtime.Tooling;
-using BuildNotification.Runtime.Tooling.FirebaseImplementation;
-using BuildNotification.Runtime.Tooling.Models;
+using Better.BuildNotification.Runtime.MessageData;
+using Better.BuildNotification.Runtime.Tooling;
+using Better.BuildNotification.Runtime.Tooling.FirebaseImplementation;
+using Better.BuildNotification.Runtime.Tooling.Models;
 using UnityEngine;
 
-namespace BuildNotification.UnityPlatform.EditorAddons.Window
+namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
 {
     public static class TestNotification
     {
@@ -32,7 +32,7 @@ namespace BuildNotification.UnityPlatform.EditorAddons.Window
             }
 
             await DatabaseFactory.Send<MessagingRequest, MessagingRespondBody, ResponseError>(
-                fcmScriptable.Data.cloudMessagingData, list);
+                fcmScriptable.Data.MessagingData, list);
             onComplete?.Invoke();
         }
 
@@ -58,7 +58,7 @@ namespace BuildNotification.UnityPlatform.EditorAddons.Window
             }
 
             await DatabaseFactory.Send<MessagingRequest, MessagingRespondBody, ResponseError>(
-                fcmScriptable.Data.cloudMessagingData, list);
+                fcmScriptable.Data.MessagingData, list);
             onComplete?.Invoke();
         }
     }

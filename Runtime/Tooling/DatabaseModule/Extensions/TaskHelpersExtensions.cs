@@ -4,7 +4,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
-namespace BuildNotification.Runtime.Tooling.DatabaseModule.Extensions
+namespace Better.BuildNotification.Runtime.Tooling.DatabaseModule
 {
     internal static class TaskHelpersExtensions
     {

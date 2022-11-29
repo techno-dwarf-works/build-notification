@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace BuildNotification.Runtime.Tooling.Authorization
+namespace Better.BuildNotification.Runtime.Tooling.Authorization
 {
     [Serializable]
     public class FirebaseAdminSDKData

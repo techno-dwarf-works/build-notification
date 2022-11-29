@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Text;
-using BuildNotification.Runtime.MessageDataModes.Models;
-using BuildNotification.Runtime.Services;
+using Better.BuildNotification.Runtime.Services;
 
-namespace BuildNotification.Runtime.MessageDataModes
+namespace Better.BuildNotification.Runtime.MessageData
 {
     public class DescriptionGenerator
     {

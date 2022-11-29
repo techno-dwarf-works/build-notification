@@ -1,9 +1,8 @@
 ﻿using System;
-using BuildNotification.Runtime.MessageDataModes;
-using BuildNotification.Runtime.MessageDataModes.Models;
+using Better.BuildNotification.Runtime.MessageData;
 using Newtonsoft.Json;
 
-namespace BuildNotification.Runtime.Tooling.Models
+namespace Better.BuildNotification.Runtime.Tooling.Models
 {
     [Serializable]
     public class MessagingRequestBody

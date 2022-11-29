@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace BuildNotification.Runtime.Tooling.DatabaseModule.RequestWrappers
+namespace Better.BuildNotification.Runtime.Tooling.DatabaseModule
 {
     public class ListWrapper<T> : Wrapper
     {

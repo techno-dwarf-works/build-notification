@@ -2,13 +2,12 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using BuildNotification.Runtime.Tooling.DatabaseModule;
-using BuildNotification.Runtime.Tooling.DatabaseModule.RequestWrappers;
-using BuildNotification.Runtime.Tooling.Interfaces;
+using Better.BuildNotification.Runtime.Tooling.DatabaseModule;
+using Better.BuildNotification.Runtime.Tooling.Interfaces;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace BuildNotification.Runtime.Tooling
+namespace Better.BuildNotification.Runtime.Tooling
 {
     public static class DatabaseFactory
     {

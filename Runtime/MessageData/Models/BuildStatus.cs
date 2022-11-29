@@ -1,4 +1,4 @@
-﻿namespace BuildNotification.Runtime.MessageDataModes.Models
+﻿namespace Better.BuildNotification.Runtime.MessageData
 {
     public enum BuildStatus : byte
     {

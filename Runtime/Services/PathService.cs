@@ -1,8 +1,8 @@
 ﻿using System.IO;
-using BuildNotification.Runtime.Authorization;
+using Better.BuildNotification.Runtime.Authorization;
 using UnityEngine;
 
-namespace BuildNotification.Runtime.Services
+namespace Better.BuildNotification.Runtime.Services
 {
     public static class PathService
     {

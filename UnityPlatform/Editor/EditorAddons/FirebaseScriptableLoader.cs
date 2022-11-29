@@ -1,9 +1,9 @@
 using System.IO;
-using BuildNotification.Runtime.Tooling.FirebaseImplementation;
+using Better.BuildNotification.Runtime.Tooling.FirebaseImplementation;
 using UnityEditor;
 using UnityEngine;
 
-namespace BuildNotification.UnityPlatform.EditorAddons
+namespace Better.BuildNotification.UnityPlatform.EditorAddons
 {
     [InitializeOnLoad]
     public class FirebaseScriptableLoader : FirebaseDataLoader

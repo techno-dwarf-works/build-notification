@@ -1,6 +1,6 @@
 using System.Net.Http;
 
-namespace BuildNotification.Runtime.Tooling.Interfaces
+namespace Better.BuildNotification.Runtime.Tooling.Interfaces
 {
     public interface ISendData
     {

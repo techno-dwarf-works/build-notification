@@ -2,11 +2,10 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using BuildNotification.Runtime.Tooling.DatabaseModule.RequestWrappers;
-using BuildNotification.Runtime.Tooling.Interfaces;
+using Better.BuildNotification.Runtime.Tooling.Interfaces;
 using Newtonsoft.Json;
 
-namespace BuildNotification.Runtime.Tooling.DatabaseModule
+namespace Better.BuildNotification.Runtime.Tooling.DatabaseModule
 {
     public class SingleDatabase : Database
     {
