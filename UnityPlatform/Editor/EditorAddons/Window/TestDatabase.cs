@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Net.Http;
-using BuildNotification.Runtime;
 using BuildNotification.Runtime.MessageDataModes.Models;
 using BuildNotification.Runtime.Services;
 using BuildNotification.Runtime.Tooling;
 using BuildNotification.Runtime.Tooling.FirebaseImplementation;
 using BuildNotification.Runtime.Tooling.Models;
 
-namespace BuildNotification.Unity.EditorAddons.Window
+namespace BuildNotification.UnityPlatform.EditorAddons.Window
 {
     public static class TestDatabase
     {

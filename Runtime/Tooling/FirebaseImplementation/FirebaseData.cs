@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using BetterAttributes.Runtime.Attributes.ReadOnly;
+using Better.Attributes.Runtime.ReadOnly;
 using BuildNotification.Runtime.Services;
 using BuildNotification.Runtime.Tooling.Authorization;
 using UnityEngine;
