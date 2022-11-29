@@ -3,5 +3,7 @@
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Cplugins_005Cbuildnotification_005Cruntime_005Cauthorization_005Cmodels/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Cplugins_005Cbuildnotification_005Cruntime_005Cmessagedatamodes_005Cinterfaces/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Cplugins_005Cbuildnotification_005Cruntime_005Cmessagedatamodes_005Cmodels/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Cplugins_005Cbuildnotification_005Cruntime_005Cmessagedata_005Cinterfaces/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Cplugins_005Cbuildnotification_005Cruntime_005Cmessagedata_005Cmodels/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Cplugins_005Cbuildnotification_005Cruntime_005Ctooling_005Cdatabasemodule_005Cextensions/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeInspection/NamespaceProvider/NamespaceFoldersToSkip/=assets_005Cplugins_005Cbuildnotification_005Cruntime_005Ctooling_005Cdatabasemodule_005Crequestwrappers/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

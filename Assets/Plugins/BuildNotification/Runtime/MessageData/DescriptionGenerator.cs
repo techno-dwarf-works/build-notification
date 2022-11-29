@@ -2,7 +2,7 @@
 using System.Text;
 using Better.BuildNotification.Runtime.Services;
 
-namespace Better.BuildNotification.Runtime.MessageDataModes
+namespace Better.BuildNotification.Runtime.MessageData
 {
     public class DescriptionGenerator
     {

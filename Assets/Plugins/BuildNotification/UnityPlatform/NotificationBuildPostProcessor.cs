@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Better.BuildNotification.Runtime.MessageDataModes;
+using Better.BuildNotification.Runtime.MessageData;
 using Better.BuildNotification.Runtime.Tooling;
 using Better.BuildNotification.UnityPlatform.EditorAddons.Extensions;
 using UnityEditor;

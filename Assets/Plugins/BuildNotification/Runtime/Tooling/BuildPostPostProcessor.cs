@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using Better.BuildNotification.Runtime.MessageDataModes;
+using Better.BuildNotification.Runtime.MessageData;
 using Better.BuildNotification.Runtime.Services;
 using Better.BuildNotification.Runtime.Tooling.FirebaseImplementation;
 using Better.BuildNotification.Runtime.Tooling.Models;

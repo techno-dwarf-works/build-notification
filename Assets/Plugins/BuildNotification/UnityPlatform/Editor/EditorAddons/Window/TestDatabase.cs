@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net.Http;
-using Better.BuildNotification.Runtime.MessageDataModes;
+using Better.BuildNotification.Runtime.MessageData;
 using Better.BuildNotification.Runtime.Services;
 using Better.BuildNotification.Runtime.Tooling;
 using Better.BuildNotification.Runtime.Tooling.FirebaseImplementation;
@@ -22,7 +22,7 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
             }
 
             await DatabaseFactory.Send<FirebaseMessageData, DatabaseRespondBody, ResponseError>(
-                fcmScriptable.Data.realtimeDatabaseData, data, HttpMethod.Put, $"{data.Guid}{PathService.JsonExtensionWithDot}");
+                fcmScriptable.Data.DatabaseData, data, HttpMethod.Put, $"{data.Guid}{PathService.JsonExtensionWithDot}");
             onComplete?.Invoke();
         }
     }

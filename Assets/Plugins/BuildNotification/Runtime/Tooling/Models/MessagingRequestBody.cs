@@ -1,5 +1,5 @@
 ﻿using System;
-using Better.BuildNotification.Runtime.MessageDataModes;
+using Better.BuildNotification.Runtime.MessageData;
 using Newtonsoft.Json;
 
 namespace Better.BuildNotification.Runtime.Tooling.Models

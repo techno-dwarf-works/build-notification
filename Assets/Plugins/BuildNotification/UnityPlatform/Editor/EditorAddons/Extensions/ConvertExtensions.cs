@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Better.BuildNotification.Runtime.MessageDataModes;
+using Better.BuildNotification.Runtime.MessageData;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
