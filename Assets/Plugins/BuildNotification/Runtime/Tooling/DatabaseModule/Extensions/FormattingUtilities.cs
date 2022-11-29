@@ -10,7 +10,7 @@ using System.Net.Http.Headers;
 using System.Xml;
 using Newtonsoft.Json.Linq;
 
-namespace BuildNotification.Runtime.Tooling.DatabaseModule.Extensions
+namespace Better.BuildNotification.Runtime.Tooling.DatabaseModule
 {
     /// <summary>
     /// Provides various internal utility functions

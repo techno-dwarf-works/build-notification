@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using BuildNotification.Runtime.MessageDataModes.Models;
-using BuildNotification.Runtime.Services;
-using BuildNotification.Runtime.Tooling.FirebaseImplementation;
-using BuildNotification.Runtime.Tooling.Models;
+using Better.BuildNotification.Runtime.MessageDataModes;
+using Better.BuildNotification.Runtime.Services;
+using Better.BuildNotification.Runtime.Tooling.FirebaseImplementation;
+using Better.BuildNotification.Runtime.Tooling.Models;
 using UnityEngine;
 
-namespace BuildNotification.Runtime.Tooling
+namespace Better.BuildNotification.Runtime.Tooling
 {
     public class BuildPostPostProcessor
     {

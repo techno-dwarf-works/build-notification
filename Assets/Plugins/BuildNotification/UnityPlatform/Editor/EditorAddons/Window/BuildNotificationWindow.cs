@@ -1,15 +1,15 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
+using Better.BuildNotification.Runtime.Services;
+using Better.BuildNotification.Runtime.Tooling.Authorization;
+using Better.BuildNotification.Runtime.Tooling.FirebaseImplementation;
 using Better.Extensions.Runtime;
-using BuildNotification.Runtime.Services;
-using BuildNotification.Runtime.Tooling.Authorization;
-using BuildNotification.Runtime.Tooling.FirebaseImplementation;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace BuildNotification.UnityPlatform.EditorAddons.Window
+namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
 {
     public class BuildNotificationWindow : EditorWindow
     {
@@ -133,13 +133,13 @@ namespace BuildNotification.UnityPlatform.EditorAddons.Window
                     var path = EditorUtility.OpenFilePanel(LocalizationService.GoogleService, "", PathService.JsonExtension);
 
                     if (string.IsNullOrEmpty(path)) return;
-                    var data = ReadPathAndInitializeData<Runtime.Authorization.ServiceInfoData>(path);
+                    var data = ReadPathAndInitializeData<global::Better.BuildNotification.Runtime.Authorization.ServiceInfoData>(path);
 
                     var savePath = EditorUtility.SaveFilePanel(LocalizationService.GoogleService, "",
-                        $"{nameof(Runtime.Authorization.ServiceInfoData)}", PathService.JsonExtension);
+                        $"{nameof(global::Better.BuildNotification.Runtime.Authorization.ServiceInfoData)}", PathService.JsonExtension);
                     WriteServiceAccountData(savePath, data);
 
-                    Debug.Log($"{nameof(Runtime.Authorization.ServiceInfoData)} initialized", _fcmScriptable);
+                    Debug.Log($"{nameof(global::Better.BuildNotification.Runtime.Authorization.ServiceInfoData)} initialized", _fcmScriptable);
                 }
 
                 EditorGUILayout.EndHorizontal();

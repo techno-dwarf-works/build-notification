@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace BuildNotification.Runtime.MessageDataModes.Models
+namespace Better.BuildNotification.Runtime.MessageDataModes
 {
     public class Error
     {

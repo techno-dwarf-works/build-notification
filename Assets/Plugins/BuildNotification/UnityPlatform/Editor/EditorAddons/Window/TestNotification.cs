@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using BuildNotification.Runtime.MessageDataModes.Models;
-using BuildNotification.Runtime.Tooling;
-using BuildNotification.Runtime.Tooling.FirebaseImplementation;
-using BuildNotification.Runtime.Tooling.Models;
+using Better.BuildNotification.Runtime.MessageDataModes;
+using Better.BuildNotification.Runtime.Tooling;
+using Better.BuildNotification.Runtime.Tooling.FirebaseImplementation;
+using Better.BuildNotification.Runtime.Tooling.Models;
 using UnityEngine;
 
-namespace BuildNotification.UnityPlatform.EditorAddons.Window
+namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
 {
     public static class TestNotification
     {

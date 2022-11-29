@@ -1,4 +1,4 @@
-namespace BuildNotification.Runtime.Tooling.DatabaseModule.RequestWrappers
+namespace Better.BuildNotification.Runtime.Tooling.DatabaseModule
 {
     public class SingleWrapper<T> : Wrapper
     {

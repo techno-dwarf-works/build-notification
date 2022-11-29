@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BuildNotification.Runtime.Tooling.Authorization;
+using Better.BuildNotification.Runtime.Tooling.Authorization;
 using UnityEngine;
 
-namespace BuildNotification.Runtime.Tooling.FirebaseImplementation
+namespace Better.BuildNotification.Runtime.Tooling.FirebaseImplementation
 {
     public static class FirebaseUpdater
     {

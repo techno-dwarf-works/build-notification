@@ -4,7 +4,7 @@
 using System;
 using System.Globalization;
 
-namespace BuildNotification.Runtime.Tooling.DatabaseModule.Extensions
+namespace Better.BuildNotification.Runtime.Tooling.DatabaseModule
 {
     /// <summary>
     /// Utility class for creating and unwrapping <see cref="Exception"/> instances.

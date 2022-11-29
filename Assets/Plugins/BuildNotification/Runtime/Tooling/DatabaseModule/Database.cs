@@ -1,11 +1,10 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using BuildNotification.Runtime.Tooling.DatabaseModule.RequestWrappers;
-using BuildNotification.Runtime.Tooling.Interfaces;
+using Better.BuildNotification.Runtime.Tooling.Interfaces;
 using UnityEngine;
 
-namespace BuildNotification.Runtime.Tooling.DatabaseModule
+namespace Better.BuildNotification.Runtime.Tooling.DatabaseModule
 {
     public abstract class Database : IDisposable
     {

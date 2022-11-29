@@ -5,12 +5,11 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using BuildNotification.Runtime.Tooling.DatabaseModule.RequestWrappers;
-using BuildNotification.Runtime.Tooling.Interfaces;
+using Better.BuildNotification.Runtime.Tooling.Interfaces;
 using Newtonsoft.Json;
-using HttpMessageContent = BuildNotification.Runtime.Tooling.DatabaseModule.Extensions.HttpMessageContent;
+using HttpMessageContent = Better.BuildNotification.Runtime.Tooling.DatabaseModule.HttpMessageContent;
 
-namespace BuildNotification.Runtime.Tooling.DatabaseModule
+namespace Better.BuildNotification.Runtime.Tooling.DatabaseModule
 {
     public class BatchDatabase : Database
     {

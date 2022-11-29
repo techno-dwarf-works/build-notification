@@ -4,7 +4,7 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace BuildNotification.Runtime.MessageDataModes.Models
+namespace Better.BuildNotification.Runtime.MessageDataModes
 {
     public class BufferSummary
     {

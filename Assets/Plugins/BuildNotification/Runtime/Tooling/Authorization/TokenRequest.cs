@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Headers;
-using BuildNotification.Runtime.Tooling.Interfaces;
+using Better.BuildNotification.Runtime.Tooling.Interfaces;
 using Newtonsoft.Json;
 
-namespace BuildNotification.Runtime.Tooling.Authorization
+namespace Better.BuildNotification.Runtime.Tooling.Authorization
 {
     public class TokenRequest : ISendData
     {

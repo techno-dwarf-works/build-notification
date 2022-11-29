@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using BuildNotification.Runtime.Tooling.Authorization;
-using BuildNotification.Runtime.Tooling.FirebaseImplementation;
-using BuildNotification.Runtime.Tooling.Models;
+using Better.BuildNotification.Runtime.Tooling.Authorization;
+using Better.BuildNotification.Runtime.Tooling.FirebaseImplementation;
+using Better.BuildNotification.Runtime.Tooling.Models;
 using UnityEngine;
 
-namespace BuildNotification.UnityPlatform.EditorAddons
+namespace Better.BuildNotification.UnityPlatform.EditorAddons
 {
     public class FirebaseScriptable : ScriptableObject
     {

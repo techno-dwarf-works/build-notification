@@ -1,13 +1,13 @@
 using System.Threading.Tasks;
-using BuildNotification.Runtime.MessageDataModes.Models;
-using BuildNotification.Runtime.Tooling;
-using BuildNotification.UnityPlatform.EditorAddons.Extensions;
+using Better.BuildNotification.Runtime.MessageDataModes;
+using Better.BuildNotification.Runtime.Tooling;
+using Better.BuildNotification.UnityPlatform.EditorAddons.Extensions;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
-namespace BuildNotification.UnityPlatform
+namespace Better.BuildNotification.UnityPlatform
 {
     public class NotificationBuildPostProcessor : IPreprocessBuildWithReport
     {

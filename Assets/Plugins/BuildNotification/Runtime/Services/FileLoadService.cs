@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace BuildNotification.Runtime.Services
+namespace Better.BuildNotification.Runtime.Services
 {
     public static class FileLoadService
     {

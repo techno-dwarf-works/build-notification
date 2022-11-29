@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using Better.Attributes.Runtime.ReadOnly;
-using BuildNotification.Runtime.Services;
-using BuildNotification.Runtime.Tooling.Authorization;
+using Better.BuildNotification.Runtime.Services;
+using Better.BuildNotification.Runtime.Tooling.Authorization;
 using UnityEngine;
 
-namespace BuildNotification.Runtime.Tooling.FirebaseImplementation
+namespace Better.BuildNotification.Runtime.Tooling.FirebaseImplementation
 {
     [Serializable]
     public class FirebaseData

@@ -9,7 +9,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BuildNotification.Runtime.Tooling.DatabaseModule.Extensions
+namespace Better.BuildNotification.Runtime.Tooling.DatabaseModule
 {
     /// <summary>
     /// Derived <see cref="HttpContent"/> class which can encapsulate an <see cref="HttpResponseMessage"/>

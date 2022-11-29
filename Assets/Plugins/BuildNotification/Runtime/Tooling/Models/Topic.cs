@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BuildNotification.Runtime.Tooling.Models
+namespace Better.BuildNotification.Runtime.Tooling.Models
 {
     [Serializable]
     public class Topic

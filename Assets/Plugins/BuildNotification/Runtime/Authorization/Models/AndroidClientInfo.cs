@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace BuildNotification.Runtime.Authorization.Models
+namespace Better.BuildNotification.Runtime.Authorization
 {
     public class AndroidClientInfo
     {

@@ -1,6 +1,4 @@
-﻿using BuildNotification.Runtime.MessageDataModes.Models;
-
-namespace BuildNotification.Runtime.MessageDataModes.Interfaces
+﻿namespace Better.BuildNotification.Runtime.MessageDataModes
 {
     public interface IMessageData
     {
