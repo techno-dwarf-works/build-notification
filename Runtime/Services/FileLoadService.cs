@@ -35,7 +35,7 @@ namespace Better.BuildNotification.Runtime.Services
 #if UNITY_2021_3_OR_NEWER
                 var str = await File.ReadAllTextAsync(path);
 #else
-                var str = File.ReadAllText(path);
+                var str = await Task.Run(() => File.ReadAllText(path));
 #endif
                 return JsonConvert.DeserializeObject<T>(str);
             }
@@ -62,7 +62,7 @@ namespace Better.BuildNotification.Runtime.Services
 #if UNITY_2021_3_OR_NEWER
             await File.WriteAllTextAsync(path, serialized);
 #else
-            File.WriteAllText(path, Convert.ToBase64String(serialized));
+            await Task.Run(() => File.WriteAllText(path, serialized));
 #endif
         }
 
