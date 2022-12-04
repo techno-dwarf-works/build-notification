@@ -1,25 +1,32 @@
 using System;
 using System.Text;
-using System.Threading.Tasks;
+using Better.BuildNotification.Platform.Services;
+using Better.BuildNotification.Platform.Tooling;
+using Better.BuildNotification.Runtime.Authorization;
 using Better.BuildNotification.Runtime.Services;
-using Better.BuildNotification.Runtime.Tooling.Authorization;
-using Better.BuildNotification.Runtime.Tooling.FirebaseImplementation;
 using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
+namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
 {
     public class BuildNotificationWindow : EditorWindow
     {
         private const string ConsoleFirebase = "https://console.firebase.google.com/u/0/";
         private static bool _isDisabled;
-        private Editor _embeddedInspector;
-        private FirebaseScriptable _fcmScriptable;
+        private FirebaseData _fcmData;
         private Vector2 _scrollPos;
         private bool _isReloading;
-        private bool _testSection;
+        private string _key;
+
+        private FirebaseDataDrawer _drawer;
+        private bool _sensitive;
+        private int _index = 0;
+
+        private string[] _sections = new string[]
+        {
+            $"{nameof(FirebaseData).PrettyCamelCase()}", "Prepare", "Test section buttons", "Sensitive section",
+        };
 
         [MenuItem("Window/Build Notification")]
         public static void Init()
@@ -28,6 +35,8 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
             // Get existing open window or if none, make a new one:
             var window = GetWindow<BuildNotificationWindow>(false, nameof(BuildNotificationWindow).PrettyCamelCase());
             window.Show();
+            window._drawer = new FirebaseDataDrawer();
+            window.saveChangesMessage = $"Some changes in {nameof(FirebaseData)} not saved";
         }
 
         private void OnEnable()
@@ -50,24 +59,40 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
         private void OnBeforeAssemblyReload()
         {
             _isReloading = true;
+            Close();
         }
 
         private void TryLoadScriptable()
         {
-            _fcmScriptable = FirebaseScriptableLoader.GetScriptable();
-            RecycleInspector(_fcmScriptable);
+            _fcmData = FirebaseDataLoader.Instance.GetData();
+            if (_drawer == null)
+                _drawer = new FirebaseDataDrawer();
+            _drawer.Setup(_fcmData);
         }
 
-        private void RecycleInspector(Object target)
+        public override void SaveChanges()
         {
-            _embeddedInspector ??= Editor.CreateEditor(target);
+            if (hasUnsavedChanges)
+            {
+                FirebaseDataLoader.Instance.SaveData(_fcmData);
+                _drawer?.MarkSaved();
+            }
+
+            base.SaveChanges();
         }
 
-        private void ClearEmbeddedInspector()
+        private void OnLostFocus()
         {
-            if (_embeddedInspector == null) return;
-            DestroyImmediate(_embeddedInspector);
-            _embeddedInspector = null;
+            SaveChanges();
+        }
+
+        private void OnDestroy()
+        {
+            if (hasUnsavedChanges)
+            {
+                FirebaseDataLoader.Instance.SaveData(_fcmData);
+                _drawer?.MarkSaved();
+            }
         }
 
         private void OnGUI()
@@ -83,103 +108,153 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
             GUI.enabled = !_isDisabled;
 
             DrawButtons();
-
-            _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos);
-            if (_embeddedInspector != null)
+            DrawSelection();
+            GUILayout.FlexibleSpace();
+            if (GUILayout.Button("Save"))
             {
-                _embeddedInspector.OnInspectorGUI();
-
-                if (_embeddedInspector.serializedObject.hasModifiedProperties)
-                {
-                    _embeddedInspector.serializedObject.ApplyModifiedProperties();
-                }
+                SaveChanges();
             }
 
-            EditorGUILayout.EndScrollView();
             EditorGUILayout.Space();
         }
 
         private void DrawButtons()
         {
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button("Open Firebase Console"))
+            using (new EditorGUILayout.HorizontalScope())
             {
-                Application.OpenURL(ConsoleFirebase);
-            }
-
-            if (GUILayout.Button($"{LocalizationService.Import} {LocalizationService.FirebaseAccountService}"))
-            {
-                var path = EditorUtility.OpenFilePanel(LocalizationService.FirebaseAccountService, "", PathService.JsonExtension);
-
-                if (string.IsNullOrEmpty(path)) return;
-                var data = ReadPathAndInitializeData<FirebaseAdminSDKData>(path);
-
-                _fcmScriptable.SetFirebaseAdminSDk(data);
-
-                EditorUtility.SetDirty(_fcmScriptable);
-                AssetDatabase.SaveAssetIfDirty(_fcmScriptable);
-
-                Debug.Log($"{nameof(FirebaseAdminSDKData)} initialized", _fcmScriptable);
-            }
-
-            EditorGUILayout.EndHorizontal();
-
-            if (_fcmScriptable != null && _fcmScriptable.IsValid)
-            {
-                EditorGUILayout.BeginHorizontal();
-
-                if (GUILayout.Button($"{LocalizationService.Prepare} {LocalizationService.GoogleService}"))
+                if (GUILayout.Button("Open Firebase Console"))
                 {
-                    var path = EditorUtility.OpenFilePanel(LocalizationService.GoogleService, "", PathService.JsonExtension);
-
-                    if (string.IsNullOrEmpty(path)) return;
-                    var data = ReadPathAndInitializeData<global::Better.BuildNotification.Runtime.Authorization.ServiceInfoData>(path);
-
-                    var savePath = EditorUtility.SaveFilePanel(LocalizationService.GoogleService, "",
-                        $"{nameof(global::Better.BuildNotification.Runtime.Authorization.ServiceInfoData)}", PathService.JsonExtension);
-                    WriteServiceAccountData(savePath, data);
-
-                    Debug.Log($"{nameof(global::Better.BuildNotification.Runtime.Authorization.ServiceInfoData)} initialized", _fcmScriptable);
+                    Application.OpenURL(ConsoleFirebase);
                 }
 
-                EditorGUILayout.EndHorizontal();
+                if (GUILayout.Button($"{LocalizationService.Import} {LocalizationService.FirebaseAccountService}"))
+                {
+                    var path = EditorUtility.OpenFilePanel(LocalizationService.FirebaseAccountService, "",
+                        PathService.JsonExtension);
 
-                TestSectionButtons();
+                    if (string.IsNullOrEmpty(path)) return;
+                    var data = ReadPathAndInitializeData<FirebaseAdminSDKData>(path);
+
+                    _fcmData.SetFirebaseAdminSDk(data);
+                    FirebaseDataLoader.Instance.SaveData(_fcmData);
+                    _drawer.Setup(_fcmData);
+
+                    Debug.Log($"{nameof(FirebaseAdminSDKData)} initialized");
+                }
+            }
+        }
+
+        private void DrawSelection()
+        {
+            if (_fcmData != null && _fcmData.IsValid)
+            {
+                EditorGUILayout.Space();
+                _index = DrawToolbar(_index, _sections);
+                switch (_index)
+                {
+                    case 0:
+                        hasUnsavedChanges = _drawer.OnGUI();
+                        break;
+                    case 1:
+                        DrawPrepareSection();
+                        break;
+                    case 2:
+                        TestSectionButtons();
+                        break;
+                    case 3:
+                        DrawKeySection();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void DrawKeySection()
+        {
+            using (new EditorGUILayout.VerticalScope())
+            {
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    _key = EditorGUILayout.TextField(new GUIContent("Encryption Key"), _key);
+                    var width = GUI.skin.button;
+                    var buttonStyle = new GUIContent("Save Project Key");
+                    var size = width.CalcSize(buttonStyle);
+                    if (GUILayout.Button(buttonStyle, GUILayout.Width(size.x)))
+                    {
+                        FirebaseDataLoader.Instance.SetKey(_key);
+                        GUI.FocusControl(null);
+                        _key = string.Empty;
+                    }
+                }
+
+                if (GUILayout.Button("Copy Project Key"))
+                {
+                    var key = FirebaseDataLoader.Instance.GetCurrentKey();
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        FirebaseDataLoader.Instance.GetCurrentKey().CopyToClipboard();
+                        EditorUtility.DisplayDialog("Key copied", "Your project key copied to clipboard",
+                            LocalizationService.Ok);
+                    }
+                    else
+                    {
+                        EditorUtility.DisplayDialog("Key Empty", "Current key is empty",
+                            LocalizationService.Ok);
+                    }
+                }
+            }
+        }
+
+        private void DrawPrepareSection()
+        {
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                if (GUILayout.Button($"{LocalizationService.Prepare} {LocalizationService.GoogleService}"))
+                {
+                    var path = EditorUtility.OpenFilePanel(LocalizationService.GoogleService, "",
+                        PathService.JsonExtension);
+
+                    if (string.IsNullOrEmpty(path)) return;
+                    var data = ReadPathAndInitializeData<ServiceInfoData>(path);
+
+                    var savePath = EditorUtility.SaveFilePanel(LocalizationService.GoogleService, "",
+                        $"{nameof(ServiceInfoData)}", PathService.JsonExtension);
+                    
+                    WriteServiceAccountData(savePath, data);
+                    Debug.Log($"{nameof(ServiceInfoData)} initialized");
+                }
             }
         }
 
         private void TestSectionButtons()
         {
-            _testSection = EditorGUILayout.BeginFoldoutHeaderGroup(_testSection, "Test section buttons");
-            if (_testSection)
+            using (new EditorGUILayout.HorizontalScope())
             {
-                EditorGUILayout.BeginHorizontal();
                 if (GUILayout.Button($"Send {LocalizationService.Success} test notification"))
                 {
                     _isDisabled = true;
-                    TestNotification.TestSucceed(_fcmScriptable,() => _isDisabled = false);
+                    TestNotification.TestSucceed(_fcmData, () => _isDisabled = false);
                 }
 
                 if (GUILayout.Button($"Send {LocalizationService.Fail} test notification"))
                 {
                     _isDisabled = true;
-                    TestNotification.TestFailed(_fcmScriptable,() => _isDisabled = false);
+                    TestNotification.TestFailed(_fcmData, () => _isDisabled = false);
                 }
-                
+
                 if (GUILayout.Button($"Send Realtime data"))
                 {
                     _isDisabled = true;
-                    TestDatabase.SendData(_fcmScriptable,() => _isDisabled = false);
-                }
-                EditorGUILayout.EndHorizontal();
-
-                if (GUILayout.Button($"Force Update Token"))
-                {
-                    _isDisabled = true;
-                    RefreshToken(_fcmScriptable.Data,() => _isDisabled = false);
+                    TestDatabase.SendData(_fcmData, () => _isDisabled = false);
                 }
             }
-            EditorGUILayout.EndFoldoutHeaderGroup();
+
+            if (GUILayout.Button($"Force Update Token"))
+            {
+                _isDisabled = true;
+                RefreshToken(_fcmData, () => _isDisabled = false);
+            }
         }
 
         private async void RefreshToken(FirebaseData scriptable, Action onComplete)
@@ -190,14 +265,15 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
 
         private bool ValidateScriptable()
         {
-            if (_fcmScriptable != null) return true;
+            if (_fcmData != null && _drawer != null) return true;
             TryLoadScriptable();
-            if (_fcmScriptable != null) return true;
+            if (_fcmData != null && _drawer != null) return true;
             var str = new StringBuilder();
-            str.AppendLine("FCMScriptable missing!");
+            str.AppendLine($"{nameof(FirebaseData)} missing!");
             str.AppendLine("Reimport plugin because it's seems to be corrupted");
 
-            EditorUtility.DisplayDialog("FCMScriptable missing", str.ToString(), LocalizationService.Ok);
+            EditorUtility.DisplayDialog($"{nameof(FirebaseData)}{FirebaseUnityLoader.AssetExtensionWithDot} missing",
+                str.ToString(), LocalizationService.Ok);
             Close();
             return false;
         }
@@ -208,15 +284,8 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
             _isDisabled = true;
             try
             {
-                var data = Task.Run(()=> FileLoadService.LoadJsonFile<T>(path));
+                var returnData = FileLoadService.LoadJsonFile<T>(path);
 
-                while (!data.IsCompleted)
-                {
-                    
-                }
-
-                var returnData = data.Result;
-                
                 if (returnData == null)
                 {
                     EditorUtility.DisplayDialog(LocalizationService.Fail,
@@ -237,8 +306,7 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
                 _isDisabled = false;
             }
         }
-
-
+        
         private async void WriteServiceAccountData<T>(string path, T data) where T : class
         {
             if (string.IsNullOrEmpty(path)) return;
@@ -246,7 +314,7 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
 
             try
             {
-                await FileLoadService.SaveFile(path, data);
+                await FileLoadService.SaveFileAsync(path, data);
             }
             catch (Exception e)
             {
@@ -257,6 +325,23 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
             {
                 _isDisabled = false;
             }
+        }
+        
+        private int DrawToolbar(int index, string[] label, bool allowDisable = false)
+        {
+            EditorGUI.BeginChangeCheck();
+            var prevIndex = index;
+            index = GUILayout.Toolbar(index, label);
+            if (EditorGUI.EndChangeCheck())
+            {
+                if (allowDisable)
+                {
+                    if (index == prevIndex)
+                        index = -1;
+                }
+            }
+
+            return index;
         }
     }
 }

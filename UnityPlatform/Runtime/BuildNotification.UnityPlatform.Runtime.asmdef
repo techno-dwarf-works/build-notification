@@ -1,0 +1,20 @@
+{
+    "name": "BuildNotification.UnityPlatform.Runtime",
+    "rootNamespace": "Better",
+    "references": [
+        "GUID:30104266982e83842957e6f19a8083a3",
+        "GUID:28da8d3b12e3efa47928e0c9070f853d",
+        "GUID:35101f455c979e94c9a0a4793484b7fd"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
