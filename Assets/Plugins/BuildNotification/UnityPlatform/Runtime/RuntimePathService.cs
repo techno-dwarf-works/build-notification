@@ -1,6 +1,7 @@
 using System.IO;
 using Better.BuildNotification.Platform.Services;
 using Better.BuildNotification.Runtime.Authorization;
+using Better.BuildNotification.Runtime.Services;
 using UnityEngine;
 
 namespace Better.BuildNotification.UnityPlatform.Runtime

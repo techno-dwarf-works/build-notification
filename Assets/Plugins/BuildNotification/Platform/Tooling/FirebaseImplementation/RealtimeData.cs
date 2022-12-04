@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Better.BuildNotification.Platform.Services;
+using Better.BuildNotification.Runtime.Services;
 using Newtonsoft.Json;
 
 namespace Better.BuildNotification.Platform.Tooling

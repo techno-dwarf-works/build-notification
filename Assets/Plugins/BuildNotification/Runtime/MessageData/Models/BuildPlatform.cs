@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Better.BuildNotification.Platform.MessageData.Models
+namespace Better.BuildNotification.Runtime.MessageData
 {
     /// <summary>
     ///   <para>Target build platform.</para>

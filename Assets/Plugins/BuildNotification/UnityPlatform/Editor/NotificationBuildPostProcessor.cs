@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using Better.BuildNotification.Platform.MessageData.Models;
 using Better.BuildNotification.Platform.Tooling;
+using Better.BuildNotification.Runtime.MessageData;
 using Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Extensions;
 using UnityEditor;
 using UnityEditor.Build;
