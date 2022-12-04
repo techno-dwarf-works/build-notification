@@ -49,7 +49,7 @@ namespace Better.BuildNotification.Platform.Tooling
             }
             
             var cloudMessagingData = FirebaseData.GetCloudMessagingData();
-            var realtimeDatabaseData = FirebaseData.GetRealtimeDatabaseData();
+            var realtimeDatabaseData = FirebaseData.GetFirebaseAdminSDKData();
             if (cloudMessagingData == null || realtimeDatabaseData == null)
             {
                 return;

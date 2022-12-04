@@ -22,7 +22,8 @@ namespace Better.BuildNotification.Platform.Tooling
             [JsonProperty("realtimeDatabaseData")] RealtimeDatabaseData realtimeDatabaseData,
             [JsonProperty("firebaseAdminSDKData")] FirebaseAdminSDKData firebaseAdminSDKData,
             [JsonProperty("expirationTime")] long expirationTime,
-            [JsonProperty("lastRequestSuccessful")] bool lastRequestSuccessful)
+            [JsonProperty("lastRequestSuccessful")]
+            bool lastRequestSuccessful)
         {
             _cloudMessagingData = cloudMessagingData;
             _realtimeDatabaseData = realtimeDatabaseData;
@@ -72,6 +73,13 @@ namespace Better.BuildNotification.Platform.Tooling
                 return false;
             }
 
+            if (!firebaseData.IsValid)
+            {
+                Console.WriteLine(
+                    $"{nameof(FirebaseData)} is not valid. Try reimport {nameof(Better.BuildNotification.Platform.Tooling.FirebaseAdminSDKData)}.");
+                return false;
+            }
+
             var now = DateTimeOffset.Now;
             if (!FirebaseUpdater.ValidateLastRequest(firebaseData, now))
             {
@@ -82,21 +90,22 @@ namespace Better.BuildNotification.Platform.Tooling
             return true;
         }
 
-        public static RealtimeDatabaseData GetRealtimeDatabaseData()
+        public static RealtimeDatabaseData GetFirebaseAdminSDKData()
         {
             var firebaseData = FirebaseDataLoader.Instance.GetData();
             if (firebaseData != null)
             {
                 if (firebaseData._firebaseAdminSDKData == null || !firebaseData._firebaseAdminSDKData.IsValid)
                 {
-                    Console.WriteLine($"Try import service_account_data{PathService.JsonExtensionWithDot} again");
+                    Console.WriteLine(
+                        $"{nameof(FirebaseData)} is not valid. Try reimport {nameof(Better.BuildNotification.Platform.Tooling.FirebaseAdminSDKData)}.");
                     return null;
                 }
 
                 return firebaseData._realtimeDatabaseData;
             }
 
-            Console.WriteLine($"{nameof(FirebaseData)}.asset missing");
+            Console.WriteLine($"{nameof(FirebaseData)}{FirebaseDataLoader.AssetExtensionWithDot} missing");
             return null;
         }
 
@@ -107,17 +116,18 @@ namespace Better.BuildNotification.Platform.Tooling
             {
                 if (fcmScriptable._firebaseAdminSDKData == null || !fcmScriptable._firebaseAdminSDKData.IsValid)
                 {
-                    Console.WriteLine($"Try import service_account_data{PathService.JsonExtensionWithDot} again");
+                    Console.WriteLine(
+                        $"{nameof(FirebaseData)} is not valid. Try reimport {nameof(Better.BuildNotification.Platform.Tooling.FirebaseAdminSDKData)}.");
                     return null;
                 }
 
                 return fcmScriptable._cloudMessagingData;
             }
 
-            Console.WriteLine($"{nameof(FirebaseData)}.asset missing");
+            Console.WriteLine($"{nameof(FirebaseData)}{FirebaseDataLoader.AssetExtensionWithDot} missing");
             return null;
         }
-        
+
         public bool IsValid => FirebaseAdminSDKData.IsValid;
         public List<Receiver> Receivers => MessagingData.Receivers;
 
