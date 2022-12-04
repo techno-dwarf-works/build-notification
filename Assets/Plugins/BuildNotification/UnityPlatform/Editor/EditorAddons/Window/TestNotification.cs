@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
-using Better.BuildNotification.Runtime.MessageData;
-using Better.BuildNotification.Runtime.Tooling;
-using Better.BuildNotification.Runtime.Tooling.FirebaseImplementation;
-using Better.BuildNotification.Runtime.Tooling.Models;
+using Better.BuildNotification.Platform.MessageData.Models;
+using Better.BuildNotification.Platform.Tooling;
 using UnityEngine;
 
-namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
+namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
 {
     public static class TestNotification
     {
-        public static async void TestSucceed(FirebaseScriptable fcmScriptable, Action onComplete)
+        public static async void TestSucceed(FirebaseData fcmScriptable, Action onComplete)
         {
             var list = new List<MessagingRequest>();
 
@@ -25,18 +23,18 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
 
 
             var now = DateTimeOffset.Now;
-            if (!FirebaseUpdater.ValidateLastRequest(fcmScriptable.Data, now))
+            if (!FirebaseUpdater.ValidateLastRequest(fcmScriptable, now))
             {
                 Debug.Log("Token not valid any more, or last request not successful. Refreshing...");
-                if (!await FirebaseUpdater.RefreshToken(fcmScriptable.Data, now)) return;
+                if (!await FirebaseUpdater.RefreshToken(fcmScriptable, now)) return;
             }
 
             await DatabaseFactory.Send<MessagingRequest, MessagingRespondBody, ResponseError>(
-                fcmScriptable.Data.MessagingData, list);
+                fcmScriptable.MessagingData, list);
             onComplete?.Invoke();
         }
 
-        public static async void TestFailed(FirebaseScriptable fcmScriptable, Action onComplete)
+        public static async void TestFailed(FirebaseData fcmScriptable, Action onComplete)
         {
             var list = new List<MessagingRequest>();
 
@@ -51,14 +49,14 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
 
 
             var now = DateTimeOffset.Now;
-            if (!FirebaseUpdater.ValidateLastRequest(fcmScriptable.Data, now))
+            if (!FirebaseUpdater.ValidateLastRequest(fcmScriptable, now))
             {
                 Debug.Log("Token not valid any more, or last request not successful. Refreshing...");
-                if (!await FirebaseUpdater.RefreshToken(fcmScriptable.Data, now)) return;
+                if (!await FirebaseUpdater.RefreshToken(fcmScriptable, now)) return;
             }
 
             await DatabaseFactory.Send<MessagingRequest, MessagingRespondBody, ResponseError>(
-                fcmScriptable.Data.MessagingData, list);
+                fcmScriptable.MessagingData, list);
             onComplete?.Invoke();
         }
     }

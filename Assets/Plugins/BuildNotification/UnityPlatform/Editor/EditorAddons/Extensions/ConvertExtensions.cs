@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Better.BuildNotification.Runtime.MessageData;
+using Better.BuildNotification.Platform.MessageData.Models;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
-namespace Better.BuildNotification.UnityPlatform.EditorAddons.Extensions
+namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Extensions
 {
     internal static class ConvertExtensions
     {

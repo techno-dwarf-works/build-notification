@@ -1,0 +1,20 @@
+{
+    "name": "BuildNotification.Platform",
+    "rootNamespace": "Better",
+    "references": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [
+        "BouncyCastle.Crypto.dll",
+        "Newtonsoft.Json.dll",
+        "jose-jwt.net40.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

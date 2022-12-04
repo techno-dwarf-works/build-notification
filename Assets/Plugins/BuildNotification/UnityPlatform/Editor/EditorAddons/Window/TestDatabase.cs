@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Net.Http;
-using Better.BuildNotification.Runtime.MessageData;
-using Better.BuildNotification.Runtime.Services;
-using Better.BuildNotification.Runtime.Tooling;
-using Better.BuildNotification.Runtime.Tooling.FirebaseImplementation;
-using Better.BuildNotification.Runtime.Tooling.Models;
+using Better.BuildNotification.Platform.MessageData.Models;
+using Better.BuildNotification.Platform.Services;
+using Better.BuildNotification.Platform.Tooling;
 
-namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
+namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
 {
     public static class TestDatabase
     {
-        public static async void SendData(FirebaseScriptable fcmScriptable, Action onComplete)
+        public static async void SendData(FirebaseData fcmScriptable, Action onComplete)
         {
             var bufferSummary = BufferSummary.CreateBufferSummary(BuildStatus.Failed);
             bufferSummary.BuildErrors.Add(new Error("Some error",""));
@@ -22,7 +20,7 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
             }
 
             await DatabaseFactory.Send<FirebaseMessageData, DatabaseRespondBody, ResponseError>(
-                fcmScriptable.Data.DatabaseData, data, HttpMethod.Put, $"{data.Guid}{PathService.JsonExtensionWithDot}");
+                fcmScriptable.DatabaseData, data, HttpMethod.Put, $"{data.Guid}{PathService.JsonExtensionWithDot}");
             onComplete?.Invoke();
         }
     }
