@@ -42,14 +42,15 @@ namespace Better.BuildNotification.Platform.Services
             return null;
         }
         
-        public static T LoadEncryptedFile<T>(string path) where T : class
+        public static T LoadEncryptedFile<T>(string path, byte[] key) where T : class
         {
             if (File.Exists(path))
             {
                 var str = File.ReadAllText(path);
                 var fromBase64String = Convert.FromBase64String(str);
                 var decrypted =
-                    Encryption.Decrypt(fromBase64String, FirebaseDataLoader.Instance.GetCurrentKeyBytes());
+                    Encryption.Decrypt(fromBase64String, key);
+                if (decrypted == null) return null;
                 var value = Encoding.UTF8.GetString(decrypted);
                 return JsonConvert.DeserializeObject<T>(value);
             }
@@ -57,12 +58,12 @@ namespace Better.BuildNotification.Platform.Services
             return null;
         }
         
-        public static void SaveEncryptedFile<T>(string path, T data) where T : class
+        public static void SaveEncryptedFile<T>(string path, T data, byte[] key) where T : class
         {
             var serializeObject = JsonConvert.SerializeObject(data, Formatting.Indented);
             var bytes = Encoding.UTF8.GetBytes(serializeObject);
             var encrypted =
-                Encryption.Encrypt(bytes, FirebaseDataLoader.Instance.GetCurrentKeyBytes());
+                Encryption.Encrypt(bytes, key);
             var base64 = Convert.ToBase64String(encrypted);
             File.WriteAllText(path, base64);
         }

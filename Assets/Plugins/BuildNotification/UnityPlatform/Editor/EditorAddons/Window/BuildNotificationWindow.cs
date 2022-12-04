@@ -188,19 +188,33 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                     }
                 }
 
-                if (GUILayout.Button("Copy Project Key"))
+                using (new EditorGUILayout.HorizontalScope())
                 {
-                    var key = FirebaseDataLoader.Instance.GetCurrentKey();
-                    if (!string.IsNullOrEmpty(key))
+                    if (GUILayout.Button("Copy Project Key"))
                     {
-                        FirebaseDataLoader.Instance.GetCurrentKey().CopyToClipboard();
-                        EditorUtility.DisplayDialog("Key copied", "Your project key copied to clipboard",
-                            LocalizationService.Ok);
+                        var key = FirebaseDataLoader.Instance.GetCurrentKey();
+                        if (!string.IsNullOrEmpty(key))
+                        {
+                            FirebaseDataLoader.Instance.GetCurrentKey().CopyToClipboard();
+                            EditorUtility.DisplayDialog("Key copied", "Your project key copied to clipboard",
+                                LocalizationService.Ok);
+                        }
+                        else
+                        {
+                            EditorUtility.DisplayDialog("Key Empty", "Current key is empty",
+                                LocalizationService.Ok);
+                        }
                     }
-                    else
+
+                    if (GUILayout.Button("Generate new key"))
                     {
-                        EditorUtility.DisplayDialog("Key Empty", "Current key is empty",
-                            LocalizationService.Ok);
+                        if (!EditorUtility.DisplayDialog($"Clean data",
+                                "This will generate new key and delete current data",
+                                LocalizationService.Ok, "Cansel")) return;
+                        FirebaseDataLoader.Instance.DeleteData();
+                        FirebaseDataLoader.Instance.ClearCurrentKey();
+                        FirebaseDataLoader.Instance.GenerateNewKey();
+                        TryLoadScriptable();
                     }
                 }
             }
@@ -220,7 +234,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
 
                     var savePath = EditorUtility.SaveFilePanel(LocalizationService.GoogleService, "",
                         $"{nameof(ServiceInfoData)}", PathService.JsonExtension);
-                    
+
                     WriteServiceAccountData(savePath, data);
                     Debug.Log($"{nameof(ServiceInfoData)} initialized");
                 }
@@ -306,7 +320,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                 _isDisabled = false;
             }
         }
-        
+
         private async void WriteServiceAccountData<T>(string path, T data) where T : class
         {
             if (string.IsNullOrEmpty(path)) return;
@@ -326,7 +340,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                 _isDisabled = false;
             }
         }
-        
+
         private int DrawToolbar(int index, string[] label, bool allowDisable = false)
         {
             EditorGUI.BeginChangeCheck();
