@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Better.BuildNotification.Platform.MessageData.Interfaces;
 using Newtonsoft.Json;
 
-namespace Better.BuildNotification.Platform.MessageData.Models
+namespace Better.BuildNotification.Runtime.MessageData
 {
     internal struct DataKeys
     {

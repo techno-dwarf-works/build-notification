@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Better.BuildNotification.Platform.MessageData.Models;
 using Better.BuildNotification.Platform.Tooling;
+using Better.BuildNotification.Runtime.MessageData;
 using UnityEngine;
 
 namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window

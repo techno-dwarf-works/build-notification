@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using Better.BuildNotification.Platform.MessageData.Models;
 using Better.BuildNotification.Platform.Services;
+using Better.BuildNotification.Runtime.MessageData;
+using Better.BuildNotification.Runtime.Services;
 
 namespace Better.BuildNotification.Platform.Tooling
 {
@@ -40,16 +41,16 @@ namespace Better.BuildNotification.Platform.Tooling
 
             Console.WriteLine(reportLog);
         }
-        
+
         private async void SendCloudMessage(BufferSummary summary)
         {
             if (!await FirebaseData.ValidateToken())
             {
                 return;
             }
-            
+
             var cloudMessagingData = FirebaseData.GetCloudMessagingData();
-            var realtimeDatabaseData = FirebaseData.GetRealtimeDatabaseData();
+            var realtimeDatabaseData = FirebaseData.GetFirebaseAdminSDKData();
             if (cloudMessagingData == null || realtimeDatabaseData == null)
             {
                 return;
@@ -76,7 +77,8 @@ namespace Better.BuildNotification.Platform.Tooling
         {
             summary.SetEndedAt(DateTime.UtcNow);
             summary.SetErrors(errorList);
-            summary.UpdateBuildSize();
+            if (summary.BuildStatus == BuildStatus.Succeeded)
+                summary.UpdateBuildSize();
         }
 
         public void AddError(Error error)
