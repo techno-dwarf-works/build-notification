@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 
-namespace Better.BuildNotification.Platform.MessageData.Models
+namespace Better.BuildNotification.Runtime.MessageData
 {
     public class BufferSummary
     {

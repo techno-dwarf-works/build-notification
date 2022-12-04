@@ -1,4 +1,4 @@
-﻿namespace Better.BuildNotification.Platform.Services
+﻿namespace Better.BuildNotification.Runtime.Services
 {
     public static class FirebaseDefinition
     {

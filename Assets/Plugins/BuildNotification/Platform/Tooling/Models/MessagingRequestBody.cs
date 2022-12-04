@@ -1,6 +1,5 @@
 ﻿using System;
-using Better.BuildNotification.Platform.MessageData;
-using Better.BuildNotification.Platform.MessageData.Models;
+using Better.BuildNotification.Runtime.MessageData;
 using Newtonsoft.Json;
 
 namespace Better.BuildNotification.Platform.Tooling

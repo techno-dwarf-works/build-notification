@@ -11,7 +11,6 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons
     public class FirebaseUnityLoader : FirebaseDataLoader
     {
         private static readonly string[] _folderPaths;
-        public const string AssetExtensionWithDot = ".txt";
         private FirebaseData _data;
 
         static FirebaseUnityLoader()

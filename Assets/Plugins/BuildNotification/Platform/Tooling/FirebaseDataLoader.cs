@@ -2,6 +2,7 @@ namespace Better.BuildNotification.Platform.Tooling
 {
     public abstract class FirebaseDataLoader
     {
+        public const string AssetExtensionWithDot = ".txt";
         protected internal static FirebaseDataLoader _instance;
         public static FirebaseDataLoader Instance => _instance;
 

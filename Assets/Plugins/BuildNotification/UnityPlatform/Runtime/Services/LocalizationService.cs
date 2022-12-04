@@ -1,7 +1,7 @@
 ﻿using Better.BuildNotification.Runtime.Authorization;
 using Better.Extensions.Runtime;
 
-namespace Better.BuildNotification.Runtime.Services
+namespace Better.BuildNotification.UnityPlatform.Runtime.Services
 {
     public class LocalizationService
     {
