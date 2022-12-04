@@ -22,6 +22,84 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons
 
         private FirebaseUnityLoader()
         {
+            GenerateNewKey();
+        }
+
+        public override FirebaseData GetData()
+        {
+            if (_data != null) return _data;
+
+            var path = GeneratePath();
+            path = Path.Combine(path, $"{nameof(FirebaseData)}{AssetExtensionWithDot}");
+
+            _data = FileLoadService.LoadEncryptedFile<FirebaseData>(path, GetCurrentKeyBytes());
+
+            if (_data != null)
+            {
+                return _data;
+            }
+
+            _data = new FirebaseData();
+            FileLoadService.SaveEncryptedFile(path, _data, GetCurrentKeyBytes());
+            
+            AssetDatabase.Refresh();
+            return _data;
+        }
+
+        private static string GeneratePath()
+        {
+            var bufferPath = Path.Combine(_folderPaths);
+            if (!Directory.Exists(bufferPath))
+            {
+                Directory.CreateDirectory(bufferPath);
+            }
+
+            return bufferPath;
+        }
+
+        public override void DeleteData()
+        {
+            var path = GeneratePath();
+            path = Path.Combine(path, $"{nameof(FirebaseData)}{AssetExtensionWithDot}");
+            if (FileLoadService.FileExists(path))
+            {
+                FileLoadService.DeleteFile(path);
+            }
+
+            _data = null;
+            AssetDatabase.Refresh();
+        }
+
+        public override void SaveData(FirebaseData data)
+        {
+            if (data == null) return;
+            _data = data;
+            var path = GeneratePath();
+            path = Path.Combine(path, $"{nameof(FirebaseData)}{AssetExtensionWithDot}");
+
+            FileLoadService.SaveEncryptedFile(path, _data, GetCurrentKeyBytes());
+        }
+
+        public override void SetKey(string encryptionKey)
+        {
+            if (!string.IsNullOrEmpty(encryptionKey))
+            {
+                EditorPrefs.SetString(Encryption.ProjectKeyName, encryptionKey);
+            }
+        }
+
+        public override string GetCurrentKey()
+        {
+            return EditorPrefs.GetString(Encryption.ProjectKeyName, string.Empty);
+        }
+
+        public override void ClearCurrentKey()
+        {
+            EditorPrefs.DeleteKey(Encryption.ProjectKeyName);
+        }
+
+        public override void GenerateNewKey()
+        {
             byte[] key;
             string stringKey;
             if (EditorPrefs.HasKey(Encryption.ProjectKeyName))
@@ -46,61 +124,6 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons
             EditorPrefs.SetString(Encryption.ProjectKeyName, stringKey);
         }
 
-        public override FirebaseData GetData()
-        {
-            if (_data != null) return _data;
-
-            var path = GeneratePath();
-            path = Path.Combine(path, $"{nameof(FirebaseData)}{AssetExtensionWithDot}");
-
-            _data = FileLoadService.LoadFile<FirebaseData>(path);
-
-            if (_data != null)
-            {
-                return _data;
-            }
-
-            _data = new FirebaseData();
-            var save = FileLoadService.SaveFileAsync(path, _data);
-
-            save.ConfigureAwait(true);
-            return _data;
-        }
-
-        private static string GeneratePath()
-        {
-            var bufferPath = Path.Combine(_folderPaths);
-            if (!Directory.Exists(bufferPath))
-            {
-                Directory.CreateDirectory(bufferPath);
-            }
-
-            return bufferPath;
-        }
-
-        public override void SaveData(FirebaseData data)
-        {
-            if (data == null) return;
-            _data = data;
-            var path = GeneratePath();
-            path = Path.Combine(path, $"{nameof(FirebaseData)}{AssetExtensionWithDot}");
-
-            FileLoadService.SaveFile(path, _data);
-        }
-
-        public override void SetKey(string encryptionKey)
-        {
-            if (!string.IsNullOrEmpty(encryptionKey))
-            {
-                EditorPrefs.SetString(Encryption.ProjectKeyName, encryptionKey);
-            }
-        }
-
-        public override string GetCurrentKey()
-        {
-            return EditorPrefs.GetString(Encryption.ProjectKeyName, string.Empty);
-        }
-        
         public override byte[] GetCurrentKeyBytes()
         {
             return Convert.FromBase64String(GetCurrentKey());

@@ -10,5 +10,8 @@ namespace Better.BuildNotification.Platform.Tooling
         public abstract void SetKey(string encryptionKey);
         public abstract string GetCurrentKey();
         public abstract byte[] GetCurrentKeyBytes();
+        public abstract void ClearCurrentKey();
+        public abstract void GenerateNewKey();
+        public abstract void DeleteData();
     }
 }
