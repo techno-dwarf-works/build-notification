@@ -29,4 +29,4 @@ This plugins works together with Build Notification Application.
 ]
 ```
 
-Window -> PackageManager -> Packages: My Registries -> Arcueid Plugins -> BuildNotification
+Window -> PackageManager -> Packages: My Registries -> Arcueid Plugins -> Build Notification
