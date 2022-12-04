@@ -29,7 +29,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
             $"{nameof(FirebaseData).PrettyCamelCase()}", "Prepare", "Test section buttons", "Sensitive section",
         };
 
-        [MenuItem("Window/Build Notification")]
+        [MenuItem("Better/Build Notification/Settings")]
         public static void Init()
         {
             _isDisabled = false;
