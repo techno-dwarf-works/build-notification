@@ -26,7 +26,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
 
         private string[] _sections = new string[]
         {
-            $"{nameof(FirebaseData).PrettyCamelCase()}", "Prepare", "Test section buttons", "Sensitive section",
+            $"{nameof(FirebaseData).PrettyCamelCase()}", "Test section buttons", "Sensitive section",
         };
 
         [MenuItem("Better/Build Notification/Settings")]
@@ -142,6 +142,21 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
 
                     Debug.Log($"{nameof(FirebaseAdminSDKData)} initialized");
                 }
+                
+                if (GUILayout.Button($"{LocalizationService.Prepare} {LocalizationService.GoogleService}"))
+                {
+                    var path = EditorUtility.OpenFilePanel(LocalizationService.GoogleService, "",
+                        PathService.JsonExtension);
+
+                    if (string.IsNullOrEmpty(path)) return;
+                    var data = ReadPathAndInitializeData<ServiceInfoData>(path);
+
+                    var savePath = EditorUtility.SaveFilePanel(LocalizationService.GoogleService, "",
+                        $"{nameof(ServiceInfoData)}", PathService.JsonExtension);
+
+                    WriteServiceAccountData(savePath, data);
+                    Debug.Log($"{nameof(ServiceInfoData)} initialized");
+                }
             }
         }
 
@@ -157,12 +172,9 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                         hasUnsavedChanges = _drawer.OnGUI();
                         break;
                     case 1:
-                        DrawPrepareSection();
-                        break;
-                    case 2:
                         TestSectionButtons();
                         break;
-                    case 3:
+                    case 2:
                         DrawKeySection();
                         break;
                     default:
@@ -220,28 +232,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                 }
             }
         }
-
-        private void DrawPrepareSection()
-        {
-            using (new EditorGUILayout.HorizontalScope())
-            {
-                if (GUILayout.Button($"{LocalizationService.Prepare} {LocalizationService.GoogleService}"))
-                {
-                    var path = EditorUtility.OpenFilePanel(LocalizationService.GoogleService, "",
-                        PathService.JsonExtension);
-
-                    if (string.IsNullOrEmpty(path)) return;
-                    var data = ReadPathAndInitializeData<ServiceInfoData>(path);
-
-                    var savePath = EditorUtility.SaveFilePanel(LocalizationService.GoogleService, "",
-                        $"{nameof(ServiceInfoData)}", PathService.JsonExtension);
-
-                    WriteServiceAccountData(savePath, data);
-                    Debug.Log($"{nameof(ServiceInfoData)} initialized");
-                }
-            }
-        }
-
+        
         private void TestSectionButtons()
         {
             using (new EditorGUILayout.HorizontalScope())
