@@ -191,7 +191,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                 {
                     _key = EditorGUILayout.TextField(new GUIContent("Encryption Key"), _key);
                     var width = GUI.skin.button;
-                    var buttonStyle = new GUIContent("Save Project Key");
+                    var buttonStyle = new GUIContent("Save Project key");
                     var size = width.CalcSize(buttonStyle);
                     if (GUILayout.Button(buttonStyle, GUILayout.Width(size.x)))
                     {
@@ -203,7 +203,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
 
                 using (new EditorGUILayout.HorizontalScope())
                 {
-                    if (GUILayout.Button("Copy Project Key"))
+                    if (GUILayout.Button("Copy Project key"))
                     {
                         var key = FirebaseDataLoader.Instance.GetCurrentKey();
                         if (!string.IsNullOrEmpty(key))
@@ -219,7 +219,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                         }
                     }
 
-                    if (GUILayout.Button("Generate new key"))
+                    if (GUILayout.Button("Generate new Project key"))
                     {
                         if (!EditorUtility.DisplayDialog($"Clean data",
                                 "This will generate new key and delete current data",
