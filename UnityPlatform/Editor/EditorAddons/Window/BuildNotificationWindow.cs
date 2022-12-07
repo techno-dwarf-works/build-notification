@@ -26,7 +26,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
 
         private string[] _sections = new string[]
         {
-            $"{nameof(FirebaseData).PrettyCamelCase()}", "Prepare", "Test section buttons", "Sensitive section",
+            $"{nameof(FirebaseData).PrettyCamelCase()}", "Test section buttons", "Sensitive section",
         };
 
         [MenuItem("Better/Build Notification/Settings")]
@@ -142,89 +142,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
 
                     Debug.Log($"{nameof(FirebaseAdminSDKData)} initialized");
                 }
-            }
-        }
-
-        private void DrawSelection()
-        {
-            if (_fcmData != null && _fcmData.IsValid)
-            {
-                EditorGUILayout.Space();
-                _index = DrawToolbar(_index, _sections);
-                switch (_index)
-                {
-                    case 0:
-                        hasUnsavedChanges = _drawer.OnGUI();
-                        break;
-                    case 1:
-                        DrawPrepareSection();
-                        break;
-                    case 2:
-                        TestSectionButtons();
-                        break;
-                    case 3:
-                        DrawKeySection();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-
-        private void DrawKeySection()
-        {
-            using (new EditorGUILayout.VerticalScope())
-            {
-                using (new EditorGUILayout.HorizontalScope())
-                {
-                    _key = EditorGUILayout.TextField(new GUIContent("Encryption Key"), _key);
-                    var width = GUI.skin.button;
-                    var buttonStyle = new GUIContent("Save Project Key");
-                    var size = width.CalcSize(buttonStyle);
-                    if (GUILayout.Button(buttonStyle, GUILayout.Width(size.x)))
-                    {
-                        FirebaseDataLoader.Instance.SetKey(_key);
-                        GUI.FocusControl(null);
-                        _key = string.Empty;
-                    }
-                }
-
-                using (new EditorGUILayout.HorizontalScope())
-                {
-                    if (GUILayout.Button("Copy Project Key"))
-                    {
-                        var key = FirebaseDataLoader.Instance.GetCurrentKey();
-                        if (!string.IsNullOrEmpty(key))
-                        {
-                            FirebaseDataLoader.Instance.GetCurrentKey().CopyToClipboard();
-                            EditorUtility.DisplayDialog("Key copied", "Your project key copied to clipboard",
-                                LocalizationService.Ok);
-                        }
-                        else
-                        {
-                            EditorUtility.DisplayDialog("Key Empty", "Current key is empty",
-                                LocalizationService.Ok);
-                        }
-                    }
-
-                    if (GUILayout.Button("Generate new key"))
-                    {
-                        if (!EditorUtility.DisplayDialog($"Clean data",
-                                "This will generate new key and delete current data",
-                                LocalizationService.Ok, "Cansel")) return;
-                        FirebaseDataLoader.Instance.DeleteData();
-                        FirebaseDataLoader.Instance.ClearCurrentKey();
-                        FirebaseDataLoader.Instance.GenerateNewKey();
-                        TryLoadScriptable();
-                    }
-                }
-            }
-        }
-
-        private void DrawPrepareSection()
-        {
-            using (new EditorGUILayout.HorizontalScope())
-            {
+                
                 if (GUILayout.Button($"{LocalizationService.Prepare} {LocalizationService.GoogleService}"))
                 {
                     var path = EditorUtility.OpenFilePanel(LocalizationService.GoogleService, "",
@@ -242,6 +160,79 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
             }
         }
 
+        private void DrawSelection()
+        {
+            if (_fcmData != null && _fcmData.IsValid)
+            {
+                EditorGUILayout.Space();
+                _index = DrawToolbar(_index, _sections);
+                switch (_index)
+                {
+                    case 0:
+                        hasUnsavedChanges = _drawer.OnGUI();
+                        break;
+                    case 1:
+                        TestSectionButtons();
+                        break;
+                    case 2:
+                        DrawKeySection();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void DrawKeySection()
+        {
+            using (new EditorGUILayout.VerticalScope())
+            {
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    _key = EditorGUILayout.TextField(new GUIContent("Encryption Key"), _key);
+                    var width = GUI.skin.button;
+                    var buttonStyle = new GUIContent("Save Project key");
+                    var size = width.CalcSize(buttonStyle);
+                    if (GUILayout.Button(buttonStyle, GUILayout.Width(size.x)))
+                    {
+                        FirebaseDataLoader.Instance.SetKey(_key);
+                        GUI.FocusControl(null);
+                        _key = string.Empty;
+                    }
+                }
+
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    if (GUILayout.Button("Copy Project key"))
+                    {
+                        var key = FirebaseDataLoader.Instance.GetCurrentKey();
+                        if (!string.IsNullOrEmpty(key))
+                        {
+                            FirebaseDataLoader.Instance.GetCurrentKey().CopyToClipboard();
+                            EditorUtility.DisplayDialog("Key copied", "Your project key copied to clipboard",
+                                LocalizationService.Ok);
+                        }
+                        else
+                        {
+                            EditorUtility.DisplayDialog("Key Empty", "Current key is empty",
+                                LocalizationService.Ok);
+                        }
+                    }
+
+                    if (GUILayout.Button("Generate new Project key"))
+                    {
+                        if (!EditorUtility.DisplayDialog($"Clean data",
+                                "This will generate new key and delete current data",
+                                LocalizationService.Ok, "Cansel")) return;
+                        FirebaseDataLoader.Instance.DeleteData();
+                        FirebaseDataLoader.Instance.ClearCurrentKey();
+                        FirebaseDataLoader.Instance.GenerateNewKey();
+                        TryLoadScriptable();
+                    }
+                }
+            }
+        }
+        
         private void TestSectionButtons()
         {
             using (new EditorGUILayout.HorizontalScope())
