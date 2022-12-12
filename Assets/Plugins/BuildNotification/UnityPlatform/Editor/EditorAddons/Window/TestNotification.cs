@@ -4,7 +4,7 @@ using Better.BuildNotification.Platform.Tooling;
 using Better.BuildNotification.Runtime.MessageData;
 using UnityEngine;
 
-namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
+namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
 {
     public static class TestNotification
     {

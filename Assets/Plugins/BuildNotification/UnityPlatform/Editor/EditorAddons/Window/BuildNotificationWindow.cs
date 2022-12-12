@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using Better.Attributes.EditorAddons.Helpers;
 using Better.BuildNotification.Platform.Services;
 using Better.BuildNotification.Platform.Tooling;
 using Better.BuildNotification.Runtime.Authorization;
@@ -9,7 +10,7 @@ using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
 
-namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
+namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
 {
     public class BuildNotificationWindow : EditorWindow
     {
@@ -21,6 +22,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
         private string _key;
 
         private FirebaseDataDrawer _drawer;
+        private QRModule _qrModule;
         private bool _sensitive;
         private int _index = 0;
 
@@ -61,14 +63,17 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
         {
             _isReloading = true;
             Close();
+            EditorPopup.CloseInstance();
         }
 
         private void TryLoadScriptable()
         {
             _fcmData = FirebaseDataLoader.Instance.GetData();
-            if (_drawer == null)
-                _drawer = new FirebaseDataDrawer();
+            if (_drawer == null) _drawer = new FirebaseDataDrawer();
             _drawer.Setup(_fcmData);
+
+            if (_qrModule == null) _qrModule = new QRModule();
+            _qrModule.Setup(_fcmData);
         }
 
         public override void SaveChanges()
@@ -102,6 +107,12 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
             {
                 EditorGUILayout.LabelField("Reloading assembly...");
                 return;
+            }
+
+            if (_qrModule != null && _qrModule.Validate())
+            {
+                _drawer?.Reset();
+                TryLoadScriptable();
             }
 
             if (!ValidateScriptable()) return;
@@ -142,21 +153,57 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
 
                     Debug.Log($"{nameof(FirebaseAdminSDKData)} initialized");
                 }
-                
-                if (GUILayout.Button($"{LocalizationService.Prepare} {LocalizationService.GoogleService}"))
+            }
+
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                if (GUILayout.Button($"{LocalizationService.GoogleService} File"))
                 {
-                    var path = EditorUtility.OpenFilePanel(LocalizationService.GoogleService, "",
-                        PathService.JsonExtension);
+                    if (SelectAndRead(out var data))
+                    {
+                        var savePath = EditorUtility.SaveFilePanel(LocalizationService.GoogleService, "",
+                            $"{nameof(ServiceInfoData)}", PathService.JsonExtension);
 
-                    if (string.IsNullOrEmpty(path)) return;
-                    var data = ReadPathAndInitializeData<ServiceInfoData>(path);
-
-                    var savePath = EditorUtility.SaveFilePanel(LocalizationService.GoogleService, "",
-                        $"{nameof(ServiceInfoData)}", PathService.JsonExtension);
-
-                    WriteServiceAccountData(savePath, data);
-                    Debug.Log($"{nameof(ServiceInfoData)} initialized");
+                        WriteServiceAccountData(savePath, data);
+                    }
                 }
+
+                if (GUILayout.Button($"{LocalizationService.GoogleService} QR"))
+                {
+                    if (SelectAndRead(out var data))
+                        _qrModule.ShowQR(data);
+                }
+            }
+        }
+
+        private bool SelectAndRead(out ServiceInfoData data)
+        {
+            data = null;
+            var path = EditorUtility.OpenFilePanel(LocalizationService.GoogleService, "",
+                PathService.JsonExtension);
+
+            if (string.IsNullOrEmpty(path)) return false;
+            data = ReadPathAndInitializeData<ServiceInfoData>(path);
+            return true;
+        }
+
+        private async void WriteServiceAccountData<T>(string path, T data) where T : class
+        {
+            if (string.IsNullOrEmpty(path)) return;
+            _isDisabled = true;
+
+            try
+            {
+                await FileLoadService.SaveFileAsync(path, data);
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                throw;
+            }
+            finally
+            {
+                _isDisabled = false;
             }
         }
 
@@ -232,7 +279,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                 }
             }
         }
-        
+
         private void TestSectionButtons()
         {
             using (new EditorGUILayout.HorizontalScope())
@@ -271,14 +318,14 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
 
         private bool ValidateScriptable()
         {
-            if (_fcmData != null && _drawer != null) return true;
+            if (_fcmData != null && _drawer != null && _drawer.IsReady) return true;
             TryLoadScriptable();
             if (_fcmData != null && _drawer != null) return true;
             var str = new StringBuilder();
             str.AppendLine($"{nameof(FirebaseData)} missing!");
             str.AppendLine("Reimport plugin because it's seems to be corrupted");
 
-            EditorUtility.DisplayDialog($"{nameof(FirebaseData)}{FirebaseUnityLoader.AssetExtensionWithDot} missing",
+            EditorUtility.DisplayDialog($"{nameof(FirebaseData)}{FirebaseDataLoader.AssetExtensionWithDot} missing",
                 str.ToString(), LocalizationService.Ok);
             Close();
             return false;
@@ -301,26 +348,6 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                 }
 
                 return returnData;
-            }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
-                throw;
-            }
-            finally
-            {
-                _isDisabled = false;
-            }
-        }
-
-        private async void WriteServiceAccountData<T>(string path, T data) where T : class
-        {
-            if (string.IsNullOrEmpty(path)) return;
-            _isDisabled = true;
-
-            try
-            {
-                await FileLoadService.SaveFileAsync(path, data);
             }
             catch (Exception e)
             {

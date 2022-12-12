@@ -5,7 +5,7 @@ using Better.BuildNotification.Platform.Tooling;
 using UnityEditor;
 using UnityEngine;
 
-namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons
+namespace Better.BuildNotification.UnityPlatform.EditorAddons
 {
     [InitializeOnLoad]
     public class FirebaseUnityLoader : FirebaseDataLoader
@@ -40,7 +40,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons
 
             _data = new FirebaseData();
             FileLoadService.SaveEncryptedFile(path, _data, GetCurrentKeyBytes());
-            
+
             AssetDatabase.Refresh();
             return _data;
         }
@@ -69,7 +69,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons
             AssetDatabase.Refresh();
         }
 
-        public override void SaveData(FirebaseData data)
+        protected override void SaveDataInternal(FirebaseData data)
         {
             if (data == null) return;
             _data = data;

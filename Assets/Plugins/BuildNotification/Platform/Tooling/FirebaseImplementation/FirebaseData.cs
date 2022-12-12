@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Better.BuildNotification.Platform.Services;
 using Newtonsoft.Json;
 
 namespace Better.BuildNotification.Platform.Tooling
@@ -69,13 +68,13 @@ namespace Better.BuildNotification.Platform.Tooling
 
             if (firebaseData == null)
             {
-                Console.WriteLine($"{nameof(FirebaseData)} missing");
+                FirebaseLogger.Instance.LogError($"{nameof(FirebaseData)} missing");
                 return false;
             }
 
             if (!firebaseData.IsValid)
             {
-                Console.WriteLine(
+                FirebaseLogger.Instance.LogError(
                     $"{nameof(FirebaseData)} is not valid. Try reimport {nameof(Better.BuildNotification.Platform.Tooling.FirebaseAdminSDKData)}.");
                 return false;
             }
@@ -83,7 +82,7 @@ namespace Better.BuildNotification.Platform.Tooling
             var now = DateTimeOffset.Now;
             if (!FirebaseUpdater.ValidateLastRequest(firebaseData, now))
             {
-                Console.WriteLine("Token not valid any more, or last request not successful. Refreshing...");
+                FirebaseLogger.Instance.Log("Token not valid any more, or last request not successful. Refreshing...");
                 return await FirebaseUpdater.RefreshToken(firebaseData, now);
             }
 
@@ -97,7 +96,7 @@ namespace Better.BuildNotification.Platform.Tooling
             {
                 if (firebaseData._firebaseAdminSDKData == null || !firebaseData._firebaseAdminSDKData.IsValid)
                 {
-                    Console.WriteLine(
+                    FirebaseLogger.Instance.Log(
                         $"{nameof(FirebaseData)} is not valid. Try reimport {nameof(Better.BuildNotification.Platform.Tooling.FirebaseAdminSDKData)}.");
                     return null;
                 }
@@ -105,7 +104,7 @@ namespace Better.BuildNotification.Platform.Tooling
                 return firebaseData._realtimeDatabaseData;
             }
 
-            Console.WriteLine($"{nameof(FirebaseData)}{FirebaseDataLoader.AssetExtensionWithDot} missing");
+            FirebaseLogger.Instance.LogError($"{nameof(FirebaseData)}{FirebaseDataLoader.AssetExtensionWithDot} missing");
             return null;
         }
 
@@ -116,7 +115,7 @@ namespace Better.BuildNotification.Platform.Tooling
             {
                 if (fcmScriptable._firebaseAdminSDKData == null || !fcmScriptable._firebaseAdminSDKData.IsValid)
                 {
-                    Console.WriteLine(
+                    FirebaseLogger.Instance.Log(
                         $"{nameof(FirebaseData)} is not valid. Try reimport {nameof(Better.BuildNotification.Platform.Tooling.FirebaseAdminSDKData)}.");
                     return null;
                 }
@@ -124,7 +123,7 @@ namespace Better.BuildNotification.Platform.Tooling
                 return fcmScriptable._cloudMessagingData;
             }
 
-            Console.WriteLine($"{nameof(FirebaseData)}{FirebaseDataLoader.AssetExtensionWithDot} missing");
+            FirebaseLogger.Instance.LogError($"{nameof(FirebaseData)}{FirebaseDataLoader.AssetExtensionWithDot} missing");
             return null;
         }
 
