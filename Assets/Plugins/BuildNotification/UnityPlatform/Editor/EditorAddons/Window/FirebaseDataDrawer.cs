@@ -6,7 +6,7 @@ using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
 
-namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
+namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
 {
     public class FirebaseDataDrawer
     {

@@ -5,7 +5,7 @@ using Better.BuildNotification.Platform.Tooling;
 using UnityEditor;
 using UnityEngine;
 
-namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons
+namespace Better.BuildNotification.UnityPlatform.EditorAddons
 {
     [InitializeOnLoad]
     public class FirebaseUnityLoader : FirebaseDataLoader

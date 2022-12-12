@@ -1,15 +1,20 @@
 using System;
 using System.Text;
+using Better.Attributes.EditorAddons.Helpers;
 using Better.BuildNotification.Platform.Services;
 using Better.BuildNotification.Platform.Tooling;
 using Better.BuildNotification.Runtime.Authorization;
 using Better.BuildNotification.Runtime.Services;
+using Better.BuildNotification.UnityPlatform.Runtime.ClientServer;
 using Better.BuildNotification.UnityPlatform.Runtime.Services;
 using Better.Extensions.Runtime;
+using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
+using ZXing;
+using ZXing.QrCode;
 
-namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
+namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
 {
     public class BuildNotificationWindow : EditorWindow
     {
@@ -142,7 +147,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
 
                     Debug.Log($"{nameof(FirebaseAdminSDKData)} initialized");
                 }
-                
+
                 if (GUILayout.Button($"{LocalizationService.Prepare} {LocalizationService.GoogleService}"))
                 {
                     var path = EditorUtility.OpenFilePanel(LocalizationService.GoogleService, "",
@@ -150,14 +155,52 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
 
                     if (string.IsNullOrEmpty(path)) return;
                     var data = ReadPathAndInitializeData<ServiceInfoData>(path);
+                    ShowQR(data);
 
-                    var savePath = EditorUtility.SaveFilePanel(LocalizationService.GoogleService, "",
-                        $"{nameof(ServiceInfoData)}", PathService.JsonExtension);
-
-                    WriteServiceAccountData(savePath, data);
                     Debug.Log($"{nameof(ServiceInfoData)} initialized");
                 }
             }
+        }
+
+        private void ShowQR(ServiceInfoData data)
+        {
+            var serializeObject = JsonConvert.SerializeObject(data, Formatting.Indented);
+            var bytes = Encoding.UTF8.GetBytes(serializeObject);
+
+            var server = new Server();
+            server.Start();
+            server.ScheduleWrite(bytes);
+            var qrTexture = GenerateQR(server.Current.ToString());
+            var openPosition = GUIUtility.GUIToScreenRect(GUILayoutUtility.GetLastRect());
+            openPosition.height = qrTexture.height;
+            openPosition.width = qrTexture.width;
+            
+            var popup = EditorPopup.InitializeAsWindow(qrTexture, openPosition, false, true);
+            popup.FocusLost += () => popup.Close();
+            popup.Closed += () => server.Stop();
+        }
+
+        private Texture2D GenerateQR(string text)
+        {
+            var encoded = new Texture2D(256, 256);
+            var color32 = Encode(text, encoded.width, encoded.height);
+            encoded.SetPixels32(color32);
+            encoded.Apply();
+            return encoded;
+        }
+
+        private static Color32[] Encode(string textForEncoding, int width, int height)
+        {
+            var writer = new BarcodeWriter
+            {
+                Format = BarcodeFormat.QR_CODE,
+                Options = new QrCodeEncodingOptions
+                {
+                    Height = height,
+                    Width = width
+                }
+            };
+            return writer.Write(textForEncoding);
         }
 
         private void DrawSelection()
@@ -232,7 +275,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                 }
             }
         }
-        
+
         private void TestSectionButtons()
         {
             using (new EditorGUILayout.HorizontalScope())
@@ -278,7 +321,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
             str.AppendLine($"{nameof(FirebaseData)} missing!");
             str.AppendLine("Reimport plugin because it's seems to be corrupted");
 
-            EditorUtility.DisplayDialog($"{nameof(FirebaseData)}{FirebaseUnityLoader.AssetExtensionWithDot} missing",
+            EditorUtility.DisplayDialog($"{nameof(FirebaseData)}{FirebaseDataLoader.AssetExtensionWithDot} missing",
                 str.ToString(), LocalizationService.Ok);
             Close();
             return false;
@@ -301,26 +344,6 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                 }
 
                 return returnData;
-            }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
-                throw;
-            }
-            finally
-            {
-                _isDisabled = false;
-            }
-        }
-
-        private async void WriteServiceAccountData<T>(string path, T data) where T : class
-        {
-            if (string.IsNullOrEmpty(path)) return;
-            _isDisabled = true;
-
-            try
-            {
-                await FileLoadService.SaveFileAsync(path, data);
             }
             catch (Exception e)
             {

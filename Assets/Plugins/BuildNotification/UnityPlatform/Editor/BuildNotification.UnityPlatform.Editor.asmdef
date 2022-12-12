@@ -5,7 +5,8 @@
         "GUID:28da8d3b12e3efa47928e0c9070f853d",
         "GUID:30104266982e83842957e6f19a8083a3",
         "GUID:03e15bee318515648afdd2bd2a5b4868",
-        "GUID:36530f22ee404294a892bf372b845f82"
+        "GUID:36530f22ee404294a892bf372b845f82",
+        "GUID:b6053aaf850e1f44ebbe8a655121831f"
     ],
     "includePlatforms": [
         "Editor"
@@ -13,7 +14,10 @@
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
-    "precompiledReferences": [],
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll",
+        "zxing.unity.dll"
+    ],
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
