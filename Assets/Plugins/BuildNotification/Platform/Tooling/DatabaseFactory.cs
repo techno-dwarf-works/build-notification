@@ -75,7 +75,7 @@ namespace Better.BuildNotification.Platform.Tooling
             var str = JsonConvert.SerializeObject(obj);
 
             var exception = new HttpRequestException(str);
-            Console.WriteLine(exception);
+            FirebaseLogger.Instance.LogException(exception);
         }
 
         private static void OnComplete<T>(T obj)
@@ -85,7 +85,7 @@ namespace Better.BuildNotification.Platform.Tooling
             var builder = new StringBuilder();
             builder.AppendLine("Succeed");
             builder.AppendLine(str);
-            Console.WriteLine(builder.ToString());
+            FirebaseLogger.Instance.Log(builder.ToString());
         }
     }
 }

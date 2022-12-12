@@ -40,7 +40,7 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons
 
             _data = new FirebaseData();
             FileLoadService.SaveEncryptedFile(path, _data, GetCurrentKeyBytes());
-            
+
             AssetDatabase.Refresh();
             return _data;
         }
@@ -69,7 +69,7 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons
             AssetDatabase.Refresh();
         }
 
-        public override void SaveData(FirebaseData data)
+        protected override void SaveDataInternal(FirebaseData data)
         {
             if (data == null) return;
             _data = data;

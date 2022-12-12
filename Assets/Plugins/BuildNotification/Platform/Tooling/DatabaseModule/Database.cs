@@ -51,7 +51,7 @@ namespace Better.BuildNotification.Platform.Tooling
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    FirebaseLogger.Instance.LogException(e);
                     return (default, null);
                 }
             }

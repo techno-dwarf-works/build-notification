@@ -5,7 +5,7 @@
   "unity": "2018.3",
   "description": "Unity Build Notification",
   "dependencies": {
-    "com.uurha.betterattributes": "0.2.5",
+    "com.uurha.betterattributes": "0.2.8",
     "com.uurha.betterextensions": "0.1.3"
   },
   "author": {

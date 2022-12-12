@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using Better.BuildNotification.Platform.Services;
 using Better.BuildNotification.Runtime.Services;
 using Newtonsoft.Json;
 
@@ -76,6 +75,12 @@ namespace Better.BuildNotification.Platform.Tooling
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
             client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", GenerateToken());
+        }
+
+        public void AddReceiver(string token)
+        {
+            if (!_receivers.Contains(token))
+                _receivers.Add(token);
         }
     }
 }
