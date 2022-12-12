@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Net.Http;
-using Better.BuildNotification.Platform.Services;
 using Better.BuildNotification.Platform.Tooling;
 using Better.BuildNotification.Runtime.MessageData;
 using Better.BuildNotification.Runtime.Services;
 
-namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
+namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
 {
     public static class TestDatabase
     {

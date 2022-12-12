@@ -39,7 +39,7 @@ namespace Better.BuildNotification.Platform.Tooling
                     throw new ArgumentOutOfRangeException();
             }
 
-            Console.WriteLine(reportLog);
+            FirebaseLogger.Instance.Log(reportLog.ToString());
         }
 
         private async void SendCloudMessage(BufferSummary summary)

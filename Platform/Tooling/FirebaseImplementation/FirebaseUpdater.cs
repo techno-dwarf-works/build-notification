@@ -13,7 +13,7 @@ namespace Better.BuildNotification.Platform.Tooling
 
             if (messageTokenError != null)
             {
-                Console.WriteLine(
+                FirebaseLogger.Instance.Log(
                     $"Error: {messageTokenError.Error} Error Description: {messageTokenError.ErrorDescription}");
             
                 fcmScriptable.LastRequestSuccessful = false;
@@ -25,7 +25,7 @@ namespace Better.BuildNotification.Platform.Tooling
 
             if (databaseTokenError != null)
             {
-                Console.WriteLine(
+                FirebaseLogger.Instance.Log(
                     $"Error: {databaseTokenError.Error} Error Description: {databaseTokenError.ErrorDescription}");
 
                 fcmScriptable.LastRequestSuccessful = false;

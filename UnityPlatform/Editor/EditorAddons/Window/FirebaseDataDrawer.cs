@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading;
 using Better.BuildNotification.Platform.Tooling;
 using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
 
-namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
+namespace Better.BuildNotification.UnityPlatform.EditorAddons.Window
 {
     public class FirebaseDataDrawer
     {
@@ -30,10 +31,12 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
 
         private float TextHeight => EditorGUIUtility.singleLineHeight * 2.5f;
         private float MaxScrollHeight => TextHeight * 3f;
+        public bool IsReady => _isReady;
 
         public void Setup(FirebaseData firebaseData)
         {
             if (_isReady) return;
+            _fieldInfos.Clear();
             _isReady = true;
             var cloudMessageData = GetFieldValue<CloudMessagingData>(firebaseData, _cloudMessagingDataName);
             var realtimeDatabaseData = GetFieldValue<RealtimeDatabaseData>(firebaseData, _realtimeDatabaseDataName);
@@ -49,6 +52,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
             DrawStringList();
 
             DrawInfos();
+            
             return _hasUnsaved;
         }
 
@@ -61,7 +65,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                     _expirationTime = EditorGUILayout.LongField(
                         new GUIContent(nameof(_expirationTime).PrettyCamelCase().FirstCharToUpper()),
                         _expirationTime);
-                    SaveIfHasChanges(check, _expirationTimeName, _expirationTime);
+                    SaveIfHasChanges(check.changed, _expirationTimeName, _expirationTime);
                 }
 
                 using (var check = new EditorGUI.ChangeCheckScope())
@@ -69,16 +73,21 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                     _lastRequestSuccessful = EditorGUILayout.Toggle(
                         new GUIContent(nameof(_lastRequestSuccessful).PrettyCamelCase().FirstCharToUpper()),
                         _lastRequestSuccessful);
-                    SaveIfHasChanges(check, _lastRequestSuccessfulName, _lastRequestSuccessful);
+                    SaveIfHasChanges(check.changed, _lastRequestSuccessfulName, _lastRequestSuccessful);
                 }
             }
         }
 
-        private void SaveIfHasChanges(EditorGUI.ChangeCheckScope check, string name, object newValue)
+        private void SaveIfHasChanges(bool changed, string name, object newValue)
         {
-            if (!check.changed || !_fieldInfos.TryGetValue(name, out var value)) return;
+            if (!changed || !_fieldInfos.TryGetValue(name, out var value)) return;
             value.Item1.SetValue(value.Item2, newValue);
             _hasUnsaved = true;
+        }
+
+        public void Reset()
+        {
+            _isReady = false;
         }
 
         private void DrawStringList()
@@ -89,8 +98,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                 {
                     EditorGUILayout.LabelField(new GUIContent(nameof(_receivers).PrettyCamelCase().FirstCharToUpper()));
 
-                    using (var scroll = new EditorGUILayout.ScrollViewScope(_scroll,
-                               GUILayout.MaxHeight(MaxScrollHeight),
+                    using (var scroll = new EditorGUILayout.ScrollViewScope(_scroll, GUILayout.MaxHeight(MaxScrollHeight),
                                GUILayout.Height(0)))
                     {
                         using (var vertical = new EditorGUI.IndentLevelScope(1))
@@ -128,7 +136,7 @@ namespace Better.BuildNotification.UnityPlatform.Editor.EditorAddons.Window
                 }
 
                 GUILayout.Space(EditorGUIUtility.singleLineHeight);
-                SaveIfHasChanges(check, _cloudMessagingDataReceiversName, _receivers);
+                SaveIfHasChanges(check.changed, _cloudMessagingDataReceiversName, _receivers);
             }
         }
 
