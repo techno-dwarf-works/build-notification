@@ -15,7 +15,7 @@ namespace Better.BuildNotification.UnityPlatform.EditorAddons
 
         static FirebaseUnityLoader()
         {
-            _folderPaths = new string[] { Application.dataPath, "BuildNotification", "Editor", "Resources" };
+            _folderPaths = new string[] { Application.dataPath, nameof(Better), nameof(BuildNotification), "Editor", "Resources" };
             _instance = new FirebaseUnityLoader();
         }
 
