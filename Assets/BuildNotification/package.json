@@ -1,13 +1,12 @@
 {
   "name": "com.uurha.buildnotification",
   "displayName": "Build Notification",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "unity": "2018.3",
   "description": "Unity Build Notification",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.0.2",
-    "com.uurha.betterattributes": "1.0.0",
-    "com.uurha.betterextensions": "0.1.5"
+    "com.uurha.betterattributes": "1.5.0"
   },
   "author": {
     "name": "Arcueid D'athemon",
