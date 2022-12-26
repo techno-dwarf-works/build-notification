@@ -1,11 +1,11 @@
 using System;
 using System.Text;
-using Better.Attributes.EditorAddons.Helpers;
 using Better.BuildNotification.Platform.Services;
 using Better.BuildNotification.Platform.Tooling;
 using Better.BuildNotification.Runtime.Authorization;
 using Better.BuildNotification.Runtime.Services;
 using Better.BuildNotification.UnityPlatform.Runtime.Services;
+using Better.EditorTools.Helpers;
 using Better.Extensions.Runtime;
 using UnityEditor;
 using UnityEngine;
