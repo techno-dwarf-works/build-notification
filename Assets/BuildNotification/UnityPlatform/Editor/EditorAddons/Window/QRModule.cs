@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Text;
 using System.Threading;
-using Better.Attributes.EditorAddons.Helpers;
 using Better.BuildNotification.Platform.Tooling;
 using Better.BuildNotification.Runtime.Authorization;
 using Better.BuildNotification.UnityPlatform.Runtime.ClientServer;
+using Better.EditorTools.Helpers;
 using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
